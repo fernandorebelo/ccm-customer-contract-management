@@ -40,6 +40,8 @@ public class Principal {
 		projeto1.setCliente(cliente1);
 		projeto1.setFuncionario(null);
 		
+		//novo commit
+		
 		//chamando core/backend para salvar o cliente		
 //		ClienteService cs = new ClienteService();
 //		try {
