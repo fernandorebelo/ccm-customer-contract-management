@@ -3,6 +3,8 @@ package br.com.fertech.ccm.core.bo;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import br.com.fertech.ccm.core.dao.ClienteDAO;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.entity.EscritorioEntity;
@@ -25,7 +27,7 @@ public class ClienteBO {
 		//VALIDAÇÕES ClienteEntity
 			//TODO validar nome
 		if(cliente.getNome() != null && cliente.getNome().equals("")) {
-			throw new BusinessException("Nome do usuário precisa ser preenchido.");
+			throw new BusinessException("Nome precisa ser preenchido.");
 		}
 			//TODO validar cpf
 		if(cliente.getCpf() != null && cliente.getCpf().equals("")) {
@@ -43,7 +45,7 @@ public class ClienteBO {
 		if(cliente.getTelefone() != null && cliente.getTelefone().equals("")) {
 			throw new BusinessException("Telefone precisa ser preenchido.");
 		}else if(validarTelefone(cliente.getTelefone()) != true) {
-			throw new BusinessException("Número de telefone inválido");
+			throw new BusinessException("Número de telefone inválido. (11 11111 1111)");
 		}
 		
 			//TODO Validação de email

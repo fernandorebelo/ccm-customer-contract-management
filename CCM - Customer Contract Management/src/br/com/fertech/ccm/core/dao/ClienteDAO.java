@@ -13,7 +13,7 @@ import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteDAO {
-	
+
 	public String exibirListaCliente() {
 		System.out.println("Cliente - Camada DAO - Puxando lista de clientes...");
 		return "Lista de clientes";
