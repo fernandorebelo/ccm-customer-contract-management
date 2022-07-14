@@ -1,7 +1,16 @@
 # CCM - Customer contract Management
 
 ## Descrição
-Sistema que está sendo desenvolvido no curso de Especialização em Java - [Curso developer TI - Full stack](https://www.devtisul.com.br/).
+Sistema desktop que está sendo desenvolvido como projeto final no curso de Especialização em Java - [Curso developer TI - Full stack](https://www.devtisul.com.br/).
+
+Foi criado em linguagem Java, com banco de dados mySQL e frontend com API SWING.
+
+A estrutura backend foi criada com os seguintes pacotes:
+- Entity: para a criação das entidades de classe.
+- Service: porta de entrada para o backend com métodos disponíveis para a view, uma classe por entidade.
+- BO - Business Object: contendo as regras de negócio.
+- DAO - Data Access Object: com as classes que realizam a operação com o banco de dados SQL.
+
 
 ## Funções do sistema
 - Cadastro de clientes.
