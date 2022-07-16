@@ -9,7 +9,8 @@ import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 public class FuncionarioDAO {
 
 	public String salvarFuncionario(FuncionarioEntity funcionario) {
-		System.out.println("Cadastrando no banco de dados...");
+		System.out.println("Funcionário - Camada DAO - Data Access Object...");
+		System.out.println("Funcionário - Cadastrando no banco de dados...");
 
 		String sql = "INSERT INTO FUNCIONARIO (NOME_FUNCIONARIO, CARGO_FUNCIONARIO, REGISTRO_FUNCIONARIO) VALUES (?,?,?)";
 		PreparedStatement ps = null;

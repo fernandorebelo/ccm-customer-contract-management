@@ -18,7 +18,7 @@ public class ClienteDAO {
 		System.out.println("Cliente - Camada DAO - Puxando lista de clientes...");
 		return "Lista de clientes";
 	}
-	
+
 	public String salvarCliente(ClienteEntity cliente)  throws BusinessException{
 		System.out.println("Cliente - Camada DAO - Data Access Object...");
 		System.out.println("Cliente - Cadastrando no banco de dados...");
@@ -55,7 +55,6 @@ public class ClienteDAO {
 			}
 		}
 		
-		//TODO implementar cadastro dessa informação no banco de dados
 		return "Cliente cadastrado.";
 	}
 }
