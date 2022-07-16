@@ -26,8 +26,6 @@ public class ProjetoDAO {
 //			ps.setObject(6, projeto.getFuncionario());
 			
 			ps.execute();
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -39,9 +37,6 @@ public class ProjetoDAO {
 				}
 			}
 		}
-		
-		
-		//TODO implementar cadastro dessa informação no banco de dados
 		return "Projeto cadastrado.";
 	}
 }
