@@ -7,8 +7,8 @@ public class ProjetoEntity {
 	private long codigoProjeto;
 	private String tipoProjeto;
 	private String ambiente;
-	private double area;
-	private double valor;
+	private Double area;
+	private Double valor;
 	private ClienteEntity cliente;
 	private FuncionarioEntity funcionario;
 	

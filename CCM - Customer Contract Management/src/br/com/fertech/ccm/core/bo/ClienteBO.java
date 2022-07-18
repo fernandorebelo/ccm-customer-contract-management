@@ -59,7 +59,7 @@ public class ClienteBO {
 		return cdao.salvarCliente(cliente);
 	}
 	
-	public boolean validarTelefone(String telefone) {
+	private boolean validarTelefone(String telefone) {
 		//retira todos os caracteres não-numéricos (incluindo espaço,tab, etc)    
 		telefone = telefone.replaceAll("\\D","");
 		
@@ -94,7 +94,7 @@ public class ClienteBO {
 		return true;
 	}
 
-	public boolean validarEmail(String email) {
+	private boolean validarEmail(String email) {
 	    boolean isEmailIdValid = false;
 	    if (email != null && email.length() > 0) {
 	        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -107,7 +107,7 @@ public class ClienteBO {
 	    return isEmailIdValid;
 	}
 
-	public boolean validarCpf(String cpf) {
+	private boolean validarCpf(String cpf) {
 		boolean isCpfValid = false;
 		if(cpf != null && cpf.length() > 0) {
 			String expression = "(^(\\d{3}.\\d{3}.\\d{3}-\\d{2})|(\\d{11})$)";

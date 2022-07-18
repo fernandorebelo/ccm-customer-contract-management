@@ -1,5 +1,7 @@
 package br.com.fertech.ccm.core.bo;
 
+import javax.swing.JOptionPane;
+
 import br.com.fertech.ccm.core.dao.ProjetoDAO;
 import br.com.fertech.ccm.core.entity.ProjetoEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;

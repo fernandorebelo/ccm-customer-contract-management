@@ -14,7 +14,7 @@ import br.com.fertech.ccm.core.service.FuncionarioService;
 import br.com.fertech.ccm.core.service.ProjetoService;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
-public class Principal {
+public class PrincipalTeste {
 
 	public static void main(String[] args){
 		//montando objeto com as informações da tela
