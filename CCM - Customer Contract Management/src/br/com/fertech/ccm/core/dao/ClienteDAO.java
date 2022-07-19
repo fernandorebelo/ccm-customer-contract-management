@@ -2,6 +2,7 @@ package br.com.fertech.ccm.core.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,56 @@ import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteDAO {
-
-	public String exibirListaCliente() {
-		System.out.println("Cliente - Camada DAO - Puxando lista de clientes...");
-		return "Lista de clientes";
+	
+	public List<ClienteEntity> listarCliente() throws BusinessException{
+		
+		String sql = "SELECT ID_CLIENTE, NM_CLIENTE, CPF_CLIENTE, END_CLIENTE, TEL_CLIENTE, EMAIL_CLIENTE FROM CLIENTE";
+		PreparedStatement ps = null;
+		List<ClienteEntity> clientes = new ArrayList<ClienteEntity>();
+		
+		//Ler a tabela no banco de dados
+		ResultSet rs = null;
+		
+		try {
+			// conexão e criar prepare statement
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			
+			//Realizar pesquisa no banco de dados
+			rs = ps.executeQuery();
+			
+			//Ler a próxima linha caso seja true
+			while(rs.next()) {
+			//setar valores
+				ClienteEntity cliente = new ClienteEntity();
+				cliente.setCodigoCliente(rs.getInt("ID_CLIENTE"));
+				cliente.setNome(rs.getString("NM_CLIENTE"));
+				cliente.setCpf(rs.getString("CPF_CLIENTE"));
+				cliente.setEndereco(rs.getString("END_CLIENTE"));
+				cliente.setTelefone(rs.getString("TEL_CLIENTE"));
+				cliente.setEmail(rs.getString("EMAIL_CLIENTE"));
+				
+			//Adicionar à lista
+				clientes.add(cliente);
+			}
+			
+			// executar comando
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao listar clientes.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return clientes;
+		
 	}
 
 	public String salvarCliente(ClienteEntity cliente)  throws BusinessException{
@@ -43,7 +90,7 @@ public class ClienteDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new BusinessException("Erro ao cadastrar usuario.");
+			throw new BusinessException("Erro ao cadastrar cliente.");
 		} finally {
 			if(ps != null) {
 				try {
@@ -57,4 +104,5 @@ public class ClienteDAO {
 		
 		return "Cliente cadastrado.";
 	}
+
 }

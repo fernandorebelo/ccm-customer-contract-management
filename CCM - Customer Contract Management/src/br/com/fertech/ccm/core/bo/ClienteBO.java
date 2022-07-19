@@ -1,5 +1,6 @@
 package br.com.fertech.ccm.core.bo;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,13 +13,12 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteBO {
 	
-	public String exibirListaCliente() {
-		System.out.println("Cliente - Camada BO...");
+	public List<ClienteEntity> listarCliente() throws BusinessException{
 		
-		//TODO 
+		//Validações Cliente
+			//TODO passar tudo pra maiúsculo
 		
-		ClienteDAO cdao = new ClienteDAO();
-		return cdao.exibirListaCliente();
+		return new ClienteDAO().listarCliente();
 	}
 
 	public String salvarCliente(ClienteEntity cliente) throws BusinessException {

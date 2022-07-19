@@ -1,5 +1,7 @@
 package br.com.fertech.ccm.view;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import br.com.fertech.ccm.core.bo.ClienteBO;
@@ -16,7 +18,7 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class PrincipalTeste {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws BusinessException{
 		//montando objeto com as informações da tela
 		ClienteEntity cliente1 = new ClienteEntity();
 		cliente1.setNome("Fernando Rebelo");
@@ -47,12 +49,17 @@ public class PrincipalTeste {
 		
 		
 		//chamando core/backend para salvar o FUNCIONARIO
-		FuncionarioService fserv = new FuncionarioService();
-		try {
-			fserv.salvarFuncionario(fent);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
+//		FuncionarioService fserv = new FuncionarioService();
+//		try {
+//			fserv.salvarFuncionario(fent);
+//		} catch (BusinessException e) {
+//			e.printStackTrace();
+//			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
+//		}
+		
+		List<ClienteEntity> clientes = new ClienteService().listarCliente();
+		for (ClienteEntity clienteEntity : clientes) {
+			System.out.println("Nome: " + clienteEntity.getNome() + "\nCódigo: " + clienteEntity.getCodigoCliente());
 		}
 		
 		
