@@ -56,7 +56,6 @@ public class PrincipalTeste {
 //			e.printStackTrace();
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}
-		
 		List<ClienteEntity> clientes = new ClienteService().listarCliente();
 		for (ClienteEntity clienteEntity : clientes) {
 			System.out.println("Nome: " + clienteEntity.getNome() + "\nCódigo: " + clienteEntity.getCodigoCliente());

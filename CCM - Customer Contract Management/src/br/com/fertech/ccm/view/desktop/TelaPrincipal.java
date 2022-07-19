@@ -46,7 +46,7 @@ public class TelaPrincipal extends JFrame {
 	 */
 	public TelaPrincipal() {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -86,6 +86,18 @@ public class TelaPrincipal extends JFrame {
 		});
 		
 		menuCadastrar.add(menuItemFuncionario);
+		
+		JMenu menuLista = new JMenu("Listas");
+		menuBar.add(menuLista);
+		
+		JMenuItem menuListaCliente = new JMenuItem("Cliente");
+		menuListaCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaListaCliente tlc = new TelaListaCliente();
+				tlc.setVisible(true);
+			}
+		});
+		menuLista.add(menuListaCliente);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

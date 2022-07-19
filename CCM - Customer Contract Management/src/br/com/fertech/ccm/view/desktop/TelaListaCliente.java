@@ -20,6 +20,9 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaListaCliente extends JFrame {
 
@@ -27,6 +30,8 @@ public class TelaListaCliente extends JFrame {
 	private JTable table;
 	//instanciar cliente entity
 	private List<ClienteEntity> clientes;
+	private JButton botaoExcluir;
+	private JButton botaoSair;
 
 	/**
 	 * Launch the application.
@@ -48,28 +53,50 @@ public class TelaListaCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaListaCliente() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1000, 420);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow]", "[][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[100px:n,grow][100px:n,grow]", "[][][][grow][]"));
 		
 		JLabel lblNewLabel = new JLabel("LISTA DE CLIENTES");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(lblNewLabel, "cell 0 0");
+		contentPane.add(lblNewLabel, "cell 0 0 2 1");
+		
+		botaoExcluir = new JButton("Excluir");
+		botaoExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteEntity clienteSelecionado = clientes.get(table.getSelectedRow());
+				int opcao = JOptionPane.showConfirmDialog(null, "Você deseja excluir o cliente de código " + clienteSelecionado.getCodigoCliente());
+				if(opcao == 0) {
+					try {
+						new ClienteService().excluirCliente(clienteSelecionado.getCodigoCliente());
+						popularTabela();
+						botaoExcluir.setEnabled(false);
+					} catch (BusinessException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					botaoExcluir.setEnabled(false);
+				}
+			}
+		});
+		botaoExcluir.setEnabled(false);
+		contentPane.add(botaoExcluir, "cell 1 1,alignx right");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 2,grow");
+		contentPane.add(scrollPane, "cell 0 3 2 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 //				JOptionPane.showMessageDialog(null, "Linha selecionada: " + table.getSelectedRow());
-				ClienteEntity cliente = clientes.get(table.getSelectedRow());
-				JOptionPane.showMessageDialog(null, "Nome do usuário: " + cliente.getNome());
-				
+//				ClienteEntity cliente = clientes.get(table.getSelectedRow());
+//				JOptionPane.showMessageDialog(null, "Nome do usuário: " + cliente.getNome());
+				botaoExcluir.setEnabled(true);
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -88,6 +115,17 @@ public class TelaListaCliente extends JFrame {
 			}
 		});
 		scrollPane.setViewportView(table);
+		
+		botaoSair = new JButton("Voltar");
+		botaoSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
+				if(opcao == 0) {
+					dispose();
+				}
+			}
+		});
+		contentPane.add(botaoSair, "cell 1 4,alignx right");
 		popularTabela();
 	}
 	

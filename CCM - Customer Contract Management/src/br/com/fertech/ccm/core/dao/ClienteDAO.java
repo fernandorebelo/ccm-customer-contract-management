@@ -9,11 +9,43 @@ import java.util.List;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
 
+import br.com.fertech.ccm.core.bo.ClienteBO;
 import br.com.fertech.ccm.core.dao.connection.ConnectionMySQL;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteDAO {
+	
+	public void excluirCliente(long cliente) throws BusinessException {
+		
+		String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE = ?";
+		
+		PreparedStatement ps = null;
+		
+		try {
+			// conexão e criar prepare statement
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			
+			//setar valores
+			ps.setLong(1, cliente);
+			
+			// executar comando
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao excluir cliente.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	public List<ClienteEntity> listarCliente() throws BusinessException{
 		

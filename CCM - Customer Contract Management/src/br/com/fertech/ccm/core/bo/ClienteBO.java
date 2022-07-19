@@ -13,6 +13,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteBO {
 	
+	public void excluirCliente(long cliente) throws BusinessException{
+		new ClienteDAO().excluirCliente(cliente);
+	}
+	
 	public List<ClienteEntity> listarCliente() throws BusinessException{
 		
 		//Validações Cliente
