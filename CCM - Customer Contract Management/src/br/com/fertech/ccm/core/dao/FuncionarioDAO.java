@@ -12,6 +12,37 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioDAO {
 	
+	public void excluirFuncionario(long funcionario) throws BusinessException{
+		
+		String sql = "DELETE FROM FUNCIONARIO WHERE ID_FUNCIONARIO = ?";
+		
+		PreparedStatement ps = null;
+		
+		try {
+			// conexão e criar prepare statement
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			
+			//setar valores
+			ps.setLong(1, funcionario);
+			
+			// executar comando
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao excluir funcionario.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public List<FuncionarioEntity> listarFuncionario() throws BusinessException{
 		List<FuncionarioEntity> funcionarios = new ArrayList<FuncionarioEntity>();
 		String sql = "SELECT ID_FUNCIONARIO, NOME_FUNCIONARIO, CARGO_FUNCIONARIO, REGISTRO_FUNCIONARIO FROM FUNCIONARIO";

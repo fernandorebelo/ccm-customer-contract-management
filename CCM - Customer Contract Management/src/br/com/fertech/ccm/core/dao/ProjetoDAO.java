@@ -12,6 +12,30 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoDAO {
 	
+	public void excluirProjeto(long projeto) throws BusinessException{
+		String sql = "DELETE FROM PROJETO WHERE ID_CLIENTE = ?";
+		PreparedStatement ps = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setLong(1, projeto);
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao excluir projeto.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public List<ProjetoEntity> listarProjeto() throws BusinessException{
 		List<ProjetoEntity> projetos = new ArrayList<ProjetoEntity>();
 		String sql = "SELECT ID_PROJETO, TIPO_PROJETO, AMB_PROJETO, AREA_PROJETO, VALOR_PROJETO FROM PROJETO";

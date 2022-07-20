@@ -11,6 +11,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoBO {
 	
+	public void excluirProjeto(long projeto) throws BusinessException{
+		new ProjetoDAO().excluirProjeto(projeto);
+	}
+	
 	public List<ProjetoEntity> listarProjeto() throws BusinessException{
 		return new ProjetoDAO().listarProjeto();
 	}
