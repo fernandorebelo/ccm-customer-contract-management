@@ -21,12 +21,7 @@ public class FuncionarioEntity {
 	public void setRegistroProfissional(String registroProfissional) {
 		this.registroProfissional = registroProfissional;
 	}
-	public long getCodigo() {
-		return codigoFuncionario;
-	}
-	public void setCodigo(long codigoFuncionario) {
-		this.codigoFuncionario = codigoFuncionario;
-	}
+	
 	public String getNome() {
 		return nome;
 	}

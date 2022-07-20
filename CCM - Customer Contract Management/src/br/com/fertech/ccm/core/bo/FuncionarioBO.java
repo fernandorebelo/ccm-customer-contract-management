@@ -1,10 +1,16 @@
 package br.com.fertech.ccm.core.bo;
 
+import java.util.List;
+
 import br.com.fertech.ccm.core.dao.FuncionarioDAO;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioBO {
+	
+	public List<FuncionarioEntity> listarFuncionario() throws BusinessException{
+		return new FuncionarioDAO().listarFuncionario();
+	}
 
 	public String salvarFuncionario(FuncionarioEntity funcionario) throws BusinessException {
 		System.out.println("Funcionário - Camada BO - Business Object...");
