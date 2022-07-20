@@ -98,6 +98,15 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuLista.add(menuListaCliente);
+		
+		JMenuItem menuListaProjeto = new JMenuItem("Projeto");
+		menuListaProjeto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaListaProjeto tlp = new TelaListaProjeto();
+				tlp.setVisible(true);
+			}
+		});
+		menuLista.add(menuListaProjeto);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
