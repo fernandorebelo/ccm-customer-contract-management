@@ -13,7 +13,7 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 public class ProjetoDAO {
 	
 	public void excluirProjeto(long projeto) throws BusinessException{
-		String sql = "DELETE FROM PROJETO WHERE ID_CLIENTE = ?";
+		String sql = "DELETE FROM PROJETO WHERE ID_PROJETO = ?";
 		PreparedStatement ps = null;
 		
 		try {

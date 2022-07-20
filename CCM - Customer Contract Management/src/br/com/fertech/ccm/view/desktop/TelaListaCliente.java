@@ -67,15 +67,18 @@ public class TelaListaCliente extends JFrame {
 		botaoExcluir = new JButton("Excluir");
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//pega o index da linha selecionada na tabela criada
 				ClienteEntity clienteSelecionado = clientes.get(table.getSelectedRow());
 				int opcao = JOptionPane.showConfirmDialog(null, "Você deseja excluir o cliente de código " + clienteSelecionado.getCodigoCliente());
 				if(opcao == 0) {
 					try {
+						//pega o código do cliente selecionado e exclui com o método excluirCliente
 						new ClienteService().excluirCliente(clienteSelecionado.getCodigoCliente());
+						//Insere novamente os dados na tabela
 						popularTabela();
+						//Desativa o botão excluir
 						botaoExcluir.setEnabled(false);
 					} catch (BusinessException e1) {
-						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
 				}else {

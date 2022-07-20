@@ -21,6 +21,8 @@ import br.com.fertech.ccm.core.entity.ProjetoEntity;
 import br.com.fertech.ccm.core.service.ProjetoService;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaListaProjeto extends JFrame {
 
@@ -62,6 +64,19 @@ public class TelaListaProjeto extends JFrame {
 		JButton botaoExcluir = new JButton("Excluir");
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ProjetoEntity projetoSelecionado = projetos.get(table.getSelectedRow());
+				int opcao = JOptionPane.showConfirmDialog(null, "Você deseja excluir o projeto de código " + projetoSelecionado.getCodigo());
+				if(opcao == 0) {
+					try {
+						new ProjetoService().excluirProjeto(projetoSelecionado.getCodigo());
+						popularTabela();
+						botaoExcluir.setEnabled(false);
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					botaoExcluir.setEnabled(false);
+				}
 			}
 		});
 		botaoExcluir.setEnabled(false);
@@ -71,9 +86,15 @@ public class TelaListaProjeto extends JFrame {
 		contentPane.add(scrollPane, "cell 0 3,grow");
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//Ativa o botão excluir ao clicar em um campo da tabela
+				botaoExcluir.setEnabled(true);
+			}
+		});
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"C\u00D3DIGO", "TIPO DE PROJETO", "AMBIENTE", "AREA", "VALOR"
@@ -109,6 +130,7 @@ public class TelaListaProjeto extends JFrame {
 		try {
 			projetos = new ProjetoService().listarProjeto();
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.getDataVector().removeAllElements();
 			
 			for(ProjetoEntity projetoEntity : projetos) {
 				model.addRow(new Object[] {
