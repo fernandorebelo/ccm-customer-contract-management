@@ -1,12 +1,19 @@
 package br.com.fertech.ccm.core.bo;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
+import br.com.fertech.ccm.core.dao.ClienteDAO;
 import br.com.fertech.ccm.core.dao.ProjetoDAO;
 import br.com.fertech.ccm.core.entity.ProjetoEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoBO {
+	
+	public List<ProjetoEntity> listarProjeto() throws BusinessException{
+		return new ProjetoDAO().listarProjeto();
+	}
 
 	public String salvarProjeto(ProjetoEntity projeto) throws BusinessException {
 		System.out.println("Projeto - Camada BO - Business Object...");
