@@ -1,12 +1,55 @@
 package br.com.fertech.ccm.core.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.fertech.ccm.core.dao.connection.ConnectionMySQL;
 import br.com.fertech.ccm.core.entity.ProjetoEntity;
+import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoDAO {
+	
+	public List<ProjetoEntity> listarProjeto() throws BusinessException{
+		List<ProjetoEntity> projetos = new ArrayList<ProjetoEntity>();
+		String sql = "SELECT ID_PROJETO, TIPO_PROJETO, AMB_PROJETO, AREA_PROJETO, VALOR_PROJETO FROM PROJETO";
+		PreparedStatement ps = null;
+		
+		ResultSet rs = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				ProjetoEntity projeto = new ProjetoEntity();
+				projeto.setCodigo(rs.getInt("ID_PROJETO"));
+				projeto.setTipoProjeto(rs.getString("TIPO_PROJETO"));
+				projeto.setAmbiente(rs.getString("AMB_PROJETO"));
+				projeto.setArea(rs.getDouble("AREA_PROJETO"));
+				projeto.setValor(rs.getDouble("VALOR_PROJETO"));
+				
+				projetos.add(projeto);
+			}
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao listar projetos.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return projetos;
+	}
 
 	public String salvarProjeto(ProjetoEntity projeto) {
 		System.out.println("Projeto - Camada DAO - Data Access Object...");
