@@ -7,7 +7,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.service.ClienteService;
@@ -19,9 +22,13 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class TelaCadastroFuncionario extends JFrame {
@@ -30,6 +37,8 @@ public class TelaCadastroFuncionario extends JFrame {
 	private JTextField textoNome;
 	private JTextField textoCargo;
 	private JTextField textoRegistro;
+	private JTable table;
+	private List<FuncionarioEntity> funcionarios;
 
 	/**
 	 * Launch the application.
@@ -52,11 +61,11 @@ public class TelaCadastroFuncionario extends JFrame {
 	 */
 	public TelaCadastroFuncionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 450);
+		setBounds(100, 100, 540, 423);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -89,9 +98,13 @@ public class TelaCadastroFuncionario extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
 		panel_1.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Excluir");
-		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
-		panel_1.add(btnNewButton_2);
+		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
+		panel_1.add(botaoExcluir);
 		
 		JButton btnNewButton_3 = new JButton("Atualizar");
 		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
@@ -164,10 +177,6 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		contentPane.add(botaoLimpar, "cell 2 7,growx");
 		
-		
-		
-		
-		
 		JButton botaoSair = new JButton("Voltar");
 		botaoSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -178,6 +187,59 @@ public class TelaCadastroFuncionario extends JFrame {
 			}
 		});
 		contentPane.add(botaoSair, "cell 2 8,growx");
+		
+		//tabela
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "cell 0 9 3 1,grow");
+		
+		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				botaoExcluir.setEnabled(true);
+			}
+		});
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"CODIGO", "NOME", "CARGO", "REGISTRO"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		scrollPane.setViewportView(table);
+		
+		popularTabela();
+	}
+	
+	private void popularTabela() {
+		try {
+			funcionarios = new FuncionarioService().listarFuncionario();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.getDataVector().removeAllElements();
+			
+			for (FuncionarioEntity funcionarioEntity : funcionarios) {
+				model.addRow(new Object[] {
+						funcionarioEntity.getCodigoFuncionario(),
+						funcionarioEntity.getNome(),
+						funcionarioEntity.getCargo(),
+						funcionarioEntity.getRegistroProfissional()
+				});
+			}
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro ao buscar funcionários no banco de dados: " + e.getMensagemDeErro());
+		}
+		
 	}
 
 	public void limparCampos() {

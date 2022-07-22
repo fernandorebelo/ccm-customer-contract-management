@@ -108,6 +108,10 @@ public class TelaCadastroCliente extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(botaoExcluir);
 		
