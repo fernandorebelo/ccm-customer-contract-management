@@ -20,10 +20,13 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.plugins.tiff.ExifParentTIFFTagSet;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class TelaPrincipal extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textoUsuario;
+	private JTextField textoSenha;
 
 	/**
 	 * Launch the application.
@@ -47,7 +50,7 @@ public class TelaPrincipal extends JFrame {
 	public TelaPrincipal() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 550, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -116,18 +119,45 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuLista.add(menuListaFuncionario);
+		
+		JLabel lblNewLabel_2 = new JLabel("excluir barra no futuro");
+		menuBar.add(lblNewLabel_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[][][grow][grow][][]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][][grow]", "[][][grow][][][][][][grow][][]"));
 		
 		JLabel lblNewLabel = new JLabel("CCM");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(lblNewLabel, "cell 0 0 4 1,alignx center");
+		contentPane.add(lblNewLabel, "cell 2 0,alignx center");
 		
 		JLabel lblNewLabel_1 = new JLabel("Customer Contract Management\r\n");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		contentPane.add(lblNewLabel_1, "cell 0 1 4 1,alignx center");
+		contentPane.add(lblNewLabel_1, "cell 2 1,alignx center");
+		
+		JLabel lblNewLabel_3 = new JLabel("Realize o login");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		contentPane.add(lblNewLabel_3, "cell 2 3,alignx center");
+		
+		JLabel lblNewLabel_4 = new JLabel("Usu\u00E1rio");
+		contentPane.add(lblNewLabel_4, "cell 1 4,alignx trailing");
+		
+		textoUsuario = new JTextField();
+		contentPane.add(textoUsuario, "cell 2 4,growx");
+		textoUsuario.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Senha");
+		contentPane.add(lblNewLabel_5, "cell 1 5,alignx trailing");
+		
+		textoSenha = new JTextField();
+		contentPane.add(textoSenha, "cell 2 5,growx");
+		textoSenha.setColumns(10);
+		
+		JLabel lblNewLabel_6 = new JLabel("Esqueci a senha");
+		contentPane.add(lblNewLabel_6, "cell 2 6,alignx right");
+		
+		JButton botaoLogin = new JButton("Login");
+		contentPane.add(botaoLogin, "cell 2 7,growx");
 		
 		JButton botaoFechar = new JButton("Fechar programa");
 		botaoFechar.addActionListener(new ActionListener() {
@@ -138,10 +168,7 @@ public class TelaPrincipal extends JFrame {
 				}
 			}
 		});
-		contentPane.add(botaoFechar, "cell 3 4,growx");
-		
-		JLabel labelCriador = new JLabel("Criado por Fernando Rebelo");
-		contentPane.add(labelCriador, "cell 0 5 4 1,alignx center");
+		contentPane.add(botaoFechar, "cell 2 9,alignx right");
 	}
 
 }

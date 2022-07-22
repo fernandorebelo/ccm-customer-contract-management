@@ -24,6 +24,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import java.awt.SystemColor;
+import javax.swing.border.LineBorder;
+import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 public class TelaCadastroCliente extends JFrame {
 
@@ -54,52 +61,82 @@ public class TelaCadastroCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroCliente() {
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 606, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[100px:n,grow][100px:n,grow][100px:n,grow]", "[][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][]"));
 		
-		JLabel lblNewLabel = new JLabel("CADASTRO DE CLIENTE");
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(220, 220, 220));
+		contentPane.add(panel, "cell 0 0 3 1,grow");
+		
+		JLabel lblNewLabel_1 = new JLabel("Logo");
+		panel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Nome da Empresa");
+		panel.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_3 = new JLabel(" | ");
+		panel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_2 = new JLabel("CCM - Customer Contract Management");
+		panel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel = new JLabel("Cadastro de cliente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(lblNewLabel, "cell 0 0 3 1,alignx center");
+		contentPane.add(lblNewLabel, "cell 0 1 3 1,alignx left");
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
+		
+		JButton btnNewButton = new JButton("Novo");
+		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Salvar");
+		panel_1.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Cancelar");
+		panel_1.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Atualizar");
+		panel_1.add(btnNewButton_3);
 		
 		JLabel labelNome = new JLabel("Nome completo");
-		contentPane.add(labelNome, "cell 0 1,alignx left");
+		contentPane.add(labelNome, "cell 0 3,alignx right");
 		
 		textoNome = new JTextField();
-		contentPane.add(textoNome, "cell 1 1,growx");
+		contentPane.add(textoNome, "cell 1 3,growx");
 		textoNome.setColumns(10);
 		
 		JLabel labelCpf = new JLabel("CPF");
-		contentPane.add(labelCpf, "cell 0 2,alignx left");
+		contentPane.add(labelCpf, "cell 0 4,alignx right");
 		
 		textoCpf = new JTextField();
-		contentPane.add(textoCpf, "cell 1 2,growx");
+		contentPane.add(textoCpf, "cell 1 4,growx");
 		textoCpf.setColumns(10);
 		
 		JLabel labelEndereco = new JLabel("Endere\u00E7o");
-		contentPane.add(labelEndereco, "cell 0 3,alignx left");
+		contentPane.add(labelEndereco, "cell 0 5,alignx right");
 		
 		textoEndereco = new JTextField();
-		contentPane.add(textoEndereco, "cell 1 3,growx");
+		contentPane.add(textoEndereco, "cell 1 5,growx");
 		textoEndereco.setColumns(10);
 		
 		JLabel labelTelefone = new JLabel("Telefone");
-		contentPane.add(labelTelefone, "cell 0 4,alignx left");
+		contentPane.add(labelTelefone, "cell 0 6,alignx right");
 		
 		textoTelefone = new JTextField();
-		contentPane.add(textoTelefone, "cell 1 4,growx");
+		contentPane.add(textoTelefone, "cell 1 6,growx");
 		textoTelefone.setColumns(10);
 		
 		JLabel labelEmail = new JLabel("Email");
-		contentPane.add(labelEmail, "cell 0 5,alignx left");
+		contentPane.add(labelEmail, "cell 0 7,alignx right");
 		
 		textoEmail = new JTextField();
 		textoEmail.setToolTipText("");
-		contentPane.add(textoEmail, "cell 1 5,growx");
+		contentPane.add(textoEmail, "cell 1 7,growx");
 		textoEmail.setColumns(10);
 		
 		JButton botaoCadastrar = new JButton("Cadastrar");
@@ -127,7 +164,13 @@ public class TelaCadastroCliente extends JFrame {
 				}
 			}
 		});
-		contentPane.add(botaoCadastrar, "cell 1 7,growx");
+		
+		JLabel textoSituacao = new JLabel("Situa\u00E7\u00E3o");
+		contentPane.add(textoSituacao, "cell 0 8,alignx right");
+		
+		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
+		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 8");
+		contentPane.add(botaoCadastrar, "cell 1 9,growx");
 		
 		JButton botaoLimpar = new JButton("Limpar campos");
 		botaoLimpar.addActionListener(new ActionListener() {
@@ -135,7 +178,10 @@ public class TelaCadastroCliente extends JFrame {
 				limparCampos();
 			}
 		});
-		contentPane.add(botaoLimpar, "cell 2 7,growx");
+		contentPane.add(botaoLimpar, "cell 2 9,growx");
+		
+		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
+		contentPane.add(radioSituacaoInativo, "cell 1 8");
 		
 		JButton botaoSair = new JButton("Voltar");
 		botaoSair.addActionListener(new ActionListener() {
@@ -146,7 +192,7 @@ public class TelaCadastroCliente extends JFrame {
 				}
 			}
 		});
-		contentPane.add(botaoSair, "cell 1 9,growx");
+		contentPane.add(botaoSair, "cell 2 10,growx");
 	}
 	
 	public void limparCampos() {

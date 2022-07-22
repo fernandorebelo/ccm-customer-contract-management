@@ -1,10 +1,12 @@
 package br.com.fertech.ccm.view.desktop;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
@@ -48,37 +50,67 @@ public class TelaCadastroFuncionario extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroFuncionario() {
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 540, 423);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[100px:n,grow][100px:n,grow][100px:n,grow]", "[][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][]"));
 		
-		JLabel lblNewLabel = new JLabel("CADASTRO FUNCIONARIO");
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(220, 220, 220));
+		contentPane.add(panel, "cell 0 0 3 1,grow");
+		
+		JLabel lblNewLabel_1 = new JLabel("Logo");
+		panel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Nome da Empresa");
+		panel.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_3 = new JLabel(" | ");
+		panel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_2 = new JLabel("CCM - Customer Contract Management");
+		panel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel = new JLabel("Cadastro de funcion\u00E1rio");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(lblNewLabel, "cell 0 0 3 1,alignx center");
+		contentPane.add(lblNewLabel, "cell 0 1 3 1,alignx left");
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
+		
+		JButton btnNewButton = new JButton("Novo");
+		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Salvar");
+		panel_1.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Cancelar");
+		panel_1.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Atualizar");
+		panel_1.add(btnNewButton_3);
 		
 		JLabel labelNome = new JLabel("Nome");
-		contentPane.add(labelNome, "cell 0 1,alignx left");
+		contentPane.add(labelNome, "cell 0 3,alignx right");
 		
 		textoNome = new JTextField();
-		contentPane.add(textoNome, "cell 1 1,growx");
+		contentPane.add(textoNome, "cell 1 3,growx");
 		textoNome.setColumns(10);
 		
 		JLabel labelCargo = new JLabel("Cargo");
-		contentPane.add(labelCargo, "cell 0 2,alignx left");
+		contentPane.add(labelCargo, "cell 0 4,alignx right");
 		
 		textoCargo = new JTextField();
-		contentPane.add(textoCargo, "cell 1 2,growx");
+		contentPane.add(textoCargo, "cell 1 4,growx");
 		textoCargo.setColumns(10);
 		
 		JLabel labelRegistro = new JLabel("Registro profissional");
-		contentPane.add(labelRegistro, "cell 0 3,alignx left");
+		contentPane.add(labelRegistro, "cell 0 5,alignx right");
 		
 		textoRegistro = new JTextField();
-		contentPane.add(textoRegistro, "cell 1 3,growx");
+		contentPane.add(textoRegistro, "cell 1 5,growx");
 		textoRegistro.setColumns(10);
 		
 		JButton botaoCadastrar = new JButton("Cadastrar");
@@ -103,8 +135,19 @@ public class TelaCadastroFuncionario extends JFrame {
 					JOptionPane.showMessageDialog(null, "Cadastro cancelado.");
 				}
 			}
-		});
-		contentPane.add(botaoCadastrar, "cell 1 5,growx");
+		} ) ;
+		
+		JLabel textoSituacao = new JLabel("Situa\u00E7\u00E3o");
+		contentPane.add(textoSituacao, "cell 0 6,alignx right");
+		
+		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
+		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 6");
+		contentPane.add(botaoCadastrar, "cell 1 9,growx");
+		
+		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
+		contentPane.add(radioSituacaoInativo, "cell 1 6");
+		
+		contentPane.add(botaoCadastrar, "cell 1 7,growx");
 		
 		JButton botaoLimpar = new JButton("Limpar campos");
 		botaoLimpar.addActionListener(new ActionListener() {
@@ -112,7 +155,13 @@ public class TelaCadastroFuncionario extends JFrame {
 				limparCampos();
 			}
 		});
-		contentPane.add(botaoLimpar, "cell 2 5,growx");
+		
+		
+		contentPane.add(botaoLimpar, "cell 2 7,growx");
+		
+		
+		
+		
 		
 		JButton botaoSair = new JButton("Voltar");
 		botaoSair.addActionListener(new ActionListener() {
@@ -123,7 +172,7 @@ public class TelaCadastroFuncionario extends JFrame {
 				}
 			}
 		});
-		contentPane.add(botaoSair, "cell 1 7,growx");
+		contentPane.add(botaoSair, "cell 2 8,growx");
 	}
 
 	public void limparCampos() {
