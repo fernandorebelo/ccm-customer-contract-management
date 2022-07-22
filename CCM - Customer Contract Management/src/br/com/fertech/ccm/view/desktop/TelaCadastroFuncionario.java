@@ -61,7 +61,7 @@ public class TelaCadastroFuncionario extends JFrame {
 	 */
 	public TelaCadastroFuncionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 540, 423);
+		setBounds(100, 100, 600, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -123,6 +123,18 @@ public class TelaCadastroFuncionario extends JFrame {
 		JButton btnNewButton_3 = new JButton("Atualizar");
 		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
 		panel_1.add(btnNewButton_3);
+		
+		JButton botaoSair = new JButton("Voltar");
+		botaoSair.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\retornar.png"));
+		panel_1.add(botaoSair);
+		botaoSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
+				if(opcao == 0) {
+					dispose();
+				}
+			}
+		});
 		
 		JLabel labelNome = new JLabel("Nome");
 		contentPane.add(labelNome, "cell 0 3,alignx right");
@@ -190,17 +202,6 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		
 		contentPane.add(botaoLimpar, "cell 2 7,growx");
-		
-		JButton botaoSair = new JButton("Voltar");
-		botaoSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
-				if(opcao == 0) {
-					dispose();
-				}
-			}
-		});
-		contentPane.add(botaoSair, "cell 2 8,growx");
 		
 		//tabela
 		JScrollPane scrollPane = new JScrollPane();

@@ -51,77 +51,6 @@ public class TelaPrincipal extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu menuCadastrar = new JMenu("Cadastrar");
-		menuBar.add(menuCadastrar);
-		
-		JMenuItem menuItemCliente = new JMenuItem("Cliente");
-		menuItemCliente.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TelaCadastroCliente tcc = new TelaCadastroCliente();
-				tcc.setVisible(true);				
-			}
-		});
-		menuCadastrar.add(menuItemCliente);
-		
-		JMenuItem menuItemProjeto = new JMenuItem("Projeto");
-		menuItemProjeto.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TelaCadastroProjeto tcp = new TelaCadastroProjeto();
-				tcp.setVisible(true);
-			}
-		});
-		
-		menuCadastrar.add(menuItemProjeto);
-		
-		JMenuItem menuItemFuncionario = new JMenuItem("Funcionario");
-		menuItemFuncionario.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TelaCadastroFuncionario tcf = new TelaCadastroFuncionario();
-				tcf.setVisible(true);
-			}
-		});
-		
-		menuCadastrar.add(menuItemFuncionario);
-		
-		JMenu menuLista = new JMenu("Listas");
-		menuBar.add(menuLista);
-		
-		JMenuItem menuListaCliente = new JMenuItem("Cliente");
-		menuListaCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaListaCliente tlc = new TelaListaCliente();
-				tlc.setVisible(true);
-			}
-		});
-		menuLista.add(menuListaCliente);
-		
-		JMenuItem menuListaProjeto = new JMenuItem("Projeto");
-		menuListaProjeto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaListaProjeto tlp = new TelaListaProjeto();
-				tlp.setVisible(true);
-			}
-		});
-		menuLista.add(menuListaProjeto);
-		
-		JMenuItem menuListaFuncionario = new JMenuItem("Funcionario");
-		menuListaFuncionario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaListaFuncionario tlf = new TelaListaFuncionario();
-				tlf.setVisible(true);
-			}
-		});
-		menuLista.add(menuListaFuncionario);
-		
-		JLabel lblNewLabel_2 = new JLabel("excluir barra no futuro");
-		menuBar.add(lblNewLabel_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -157,6 +86,12 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(lblNewLabel_6, "cell 2 6,alignx right");
 		
 		JButton botaoLogin = new JButton("Login");
+		botaoLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInicialSistema tis = new TelaInicialSistema();
+				tis.setVisible(true);
+			}
+		});
 		contentPane.add(botaoLogin, "cell 2 7,growx");
 		
 		JButton botaoFechar = new JButton("Fechar programa");

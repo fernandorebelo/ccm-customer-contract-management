@@ -125,6 +125,18 @@ public class TelaCadastroProjeto extends JFrame {
 		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
 		panel_1.add(btnNewButton_3);
 		
+		JButton botaoSair = new JButton("Voltar");
+		botaoSair.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\retornar.png"));
+		panel_1.add(botaoSair);
+		botaoSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
+				if(opcao == 0) {
+					dispose();
+				}
+			}
+		});
+		
 		JLabel labelTipoProjeto = new JLabel("Tipo de projeto");
 		contentPane.add(labelTipoProjeto, "cell 0 3,alignx right");
 		
@@ -198,17 +210,6 @@ public class TelaCadastroProjeto extends JFrame {
 			}
 		});
 		contentPane.add(botaoLimpar, "cell 2 8,growx");
-		
-		JButton botaoSair = new JButton("Voltar");
-		botaoSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
-				if(opcao == 0) {
-					dispose();
-				}
-			}
-		});
-		contentPane.add(botaoSair, "cell 2 9,growx");
 		
 		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
 		contentPane.add(radioSituacaoInativo, "cell 1 7");
