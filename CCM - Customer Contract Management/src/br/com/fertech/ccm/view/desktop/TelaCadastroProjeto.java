@@ -92,7 +92,7 @@ public class TelaCadastroProjeto extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
 		panel_1.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Cancelar");
+		JButton btnNewButton_2 = new JButton("Excluir");
 		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(btnNewButton_2);
 		

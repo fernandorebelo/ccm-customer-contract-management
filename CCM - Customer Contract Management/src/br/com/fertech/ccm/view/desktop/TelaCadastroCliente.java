@@ -19,23 +19,30 @@ import br.com.fertech.ccm.core.service.ClienteService;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class TelaCadastroCliente extends JFrame {
 
 	private JPanel contentPane;
+	private JTable table;
+	private List<ClienteEntity> clientes;
 	private JTextField textoNome;
 	private JTextField textoCpf;
 	private JTextField textoEndereco;
@@ -67,7 +74,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][][grow]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -100,9 +107,9 @@ public class TelaCadastroCliente extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
 		panel_1.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Cancelar");
-		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
-		panel_1.add(btnNewButton_2);
+		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
+		panel_1.add(botaoExcluir);
 		
 		JButton btnNewButton_3 = new JButton("Atualizar");
 		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
@@ -198,6 +205,37 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		contentPane.add(botaoSair, "cell 2 10,growx");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "cell 0 11 3 1,grow");
+		
+		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+//				JOptionPane.showMessageDialog(null, "Linha selecionada: " + table.getSelectedRow());
+//				ClienteEntity cliente = clientes.get(table.getSelectedRow());
+//				JOptionPane.showMessageDialog(null, "Nome do usuário: " + cliente.getNome());
+				botaoExcluir.setEnabled(true);
+			}
+		});
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"C\u00D3DIGO", "NOME", "CPF", "ENDERECO", "TELEFONE", "E-MAIL"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		} ) ;
+		scrollPane.setViewportView(table);
+		popularTabela();
 	}
 	
 	public void limparCampos() {
@@ -207,5 +245,27 @@ public class TelaCadastroCliente extends JFrame {
 		textoTelefone.setText("");
 		textoEmail.setText("");
 	}
+	
+	//método para inserir dados na tabela
+		private void popularTabela() {
+			try {
+				clientes = new ClienteService().listarCliente();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.getDataVector().removeAllElements(); //para não repetir a tabela em algum momento
+				
+				for (ClienteEntity clienteEntity : clientes) {
+					model.addRow(new Object[] {clienteEntity.getCodigoCliente(),
+												clienteEntity.getNome(),
+												clienteEntity.getCpf(),
+												clienteEntity.getEndereco(),
+												clienteEntity.getEmail(),
+												clienteEntity.getEmail()
+							});
+				}
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Erro ao buscar clientes no banco de dados: " + e.getMensagemDeErro());
+			}
+		}
 
 }
