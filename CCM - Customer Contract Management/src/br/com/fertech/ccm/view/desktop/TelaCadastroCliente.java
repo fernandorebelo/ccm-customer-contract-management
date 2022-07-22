@@ -31,6 +31,7 @@ import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class TelaCadastroCliente extends JFrame {
 
@@ -62,7 +63,7 @@ public class TelaCadastroCliente extends JFrame {
 	 */
 	public TelaCadastroCliente() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 606, 450);
+		setBounds(100, 100, 600, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -92,15 +93,19 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
 		
 		JButton btnNewButton = new JButton("Novo");
+		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
 		panel_1.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Salvar");
+		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Cancelar");
+		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Atualizar");
+		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
 		panel_1.add(btnNewButton_3);
 		
 		JLabel labelNome = new JLabel("Nome completo");
