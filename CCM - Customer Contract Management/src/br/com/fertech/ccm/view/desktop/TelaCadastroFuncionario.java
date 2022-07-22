@@ -101,6 +101,20 @@ public class TelaCadastroFuncionario extends JFrame {
 		JButton botaoExcluir = new JButton("Excluir");
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				FuncionarioEntity funcionarioSelecionado = funcionarios.get(table.getSelectedRow());
+				int opcao = JOptionPane.showConfirmDialog(null, "Você deseja excluir o funcionário de código " + funcionarioSelecionado.getCodigoFuncionario());
+				if(opcao == 0) {
+					try {
+						new FuncionarioService().excluirFuncionario(funcionarioSelecionado.getCodigoFuncionario());
+						popularTabela();
+						botaoExcluir.setEnabled(false);
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					botaoExcluir.setEnabled(false);
+				}
+				
 			}
 		});
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));

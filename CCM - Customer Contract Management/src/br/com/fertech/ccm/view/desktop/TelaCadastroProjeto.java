@@ -101,6 +101,23 @@ public class TelaCadastroProjeto extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProjetoEntity projetoSelecionado = projetos.get(table.getSelectedRow());
+				int opcao = JOptionPane.showConfirmDialog(null, "Você deseja excluir o projeto de código " + projetoSelecionado.getCodigo());
+				if(opcao == 0) {
+					try {
+						new ProjetoService().excluirProjeto(projetoSelecionado.getCodigo());
+						popularTabela();
+						botaoExcluir.setEnabled(false);
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					botaoExcluir.setEnabled(false);
+				}
+			}
+		});
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(botaoExcluir);
 		

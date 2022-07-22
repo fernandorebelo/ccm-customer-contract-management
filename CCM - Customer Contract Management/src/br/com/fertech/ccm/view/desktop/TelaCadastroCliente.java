@@ -15,7 +15,9 @@ import javax.swing.border.EmptyBorder;
 
 import br.com.fertech.ccm.core.dao.ClienteDAO;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
+import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.service.ClienteService;
+import br.com.fertech.ccm.core.service.FuncionarioService;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
@@ -108,8 +110,23 @@ public class TelaCadastroCliente extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.setEnabled(false);
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ClienteEntity clienteSelecionado = clientes.get(table.getSelectedRow());
+				int opcao = JOptionPane.showConfirmDialog(null, "Você deseja excluir o funcionário de código " + clienteSelecionado.getCodigoCliente());
+				if(opcao == 0) {
+					try {
+						new ClienteService().excluirCliente(clienteSelecionado.getCodigoCliente());
+						popularTabela();
+						botaoExcluir.setEnabled(false);
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					botaoExcluir.setEnabled(false);
+				}
+				
 			}
 		});
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
