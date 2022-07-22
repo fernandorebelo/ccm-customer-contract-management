@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.entity.ProjetoEntity;
@@ -23,12 +24,19 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class TelaCadastroProjeto extends JFrame {
 
 	private JPanel contentPane;
+	private JTable table;
+	private List<ProjetoEntity> projetos;
 	private JTextField textoTipoProjeto;
 	private JTextField textoAmbiente;
 	private JTextField textoArea;
@@ -59,7 +67,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][grow]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -92,9 +100,9 @@ public class TelaCadastroProjeto extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
 		panel_1.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Excluir");
-		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
-		panel_1.add(btnNewButton_2);
+		JButton botaoExcluir = new JButton("Excluir");
+		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
+		panel_1.add(botaoExcluir);
 		
 		JButton btnNewButton_3 = new JButton("Atualizar");
 		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
@@ -187,13 +195,64 @@ public class TelaCadastroProjeto extends JFrame {
 		
 		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
 		contentPane.add(radioSituacaoInativo, "cell 1 7");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "cell 0 10 3 1,grow");
+		
+		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//Ativa o botão excluir ao clicar em um campo da tabela
+				botaoExcluir.setEnabled(true);
+			}
+		});
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"C\u00D3DIGO", "TIPO DE PROJETO", "AMBIENTE", "AREA", "VALOR"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setViewportView(table);
+		popularTabela();
 	}
 	
-	public void limparCampos() {
-		textoTipoProjeto.setText("");
-		textoAmbiente.setText("");
-		textoArea.setText("");
-		textoValor.setText("");
-	}
+		public void limparCampos() {
+			textoTipoProjeto.setText("");
+			textoAmbiente.setText("");
+			textoArea.setText("");
+			textoValor.setText("");
+		}
+		
+		private void popularTabela() {
+			try {
+				projetos = new ProjetoService().listarProjeto();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.getDataVector().removeAllElements();
+				
+				for(ProjetoEntity projetoEntity : projetos) {
+					model.addRow(new Object[] {
+							projetoEntity.getCodigo(), 
+							projetoEntity.getTipoProjeto(), 
+							projetoEntity.getAmbiente(), 
+							projetoEntity.getArea(), 
+							projetoEntity.getValor()
+							});
+				}
+				
+				
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Erro ao buscar projetos no banco de dados: " + e.getMensagemDeErro());
+			}
+		}
 
 }
