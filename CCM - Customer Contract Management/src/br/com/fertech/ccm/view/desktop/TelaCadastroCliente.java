@@ -29,6 +29,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import java.awt.SystemColor;
@@ -36,6 +38,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -50,6 +53,7 @@ public class TelaCadastroCliente extends JFrame {
 	private JTextField textoEndereco;
 	private JTextField textoTelefone;
 	private JTextField textoEmail;
+	
 
 	/**
 	 * Launch the application.
@@ -78,6 +82,12 @@ public class TelaCadastroCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][][grow]"));
 		
+		JButton botaoCadastrar = new JButton("Cadastrar");
+		JButton botaoLimpar = new JButton("Limpar campos");
+		JButton botaoCancelar = new JButton("Cancelar");
+		JButton botaoExcluir = new JButton("Excluir");
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
 		contentPane.add(panel, "cell 0 0 3 1,grow");
@@ -102,14 +112,28 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
 		
 		JButton btnNewButton = new JButton("Novo");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textoNome.setEnabled(true);
+				textoCpf.setEnabled(true);
+				textoEndereco.setEnabled(true);
+				textoTelefone.setEnabled(true);
+				textoEmail.setEnabled(true);
+				botaoCancelar.setEnabled(true);
+				botaoCancelar.setVisible(true);
+				botaoCadastrar.setEnabled(true);
+				botaoLimpar.setEnabled(true);
+			}
+		});
 		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
 		panel_1.add(btnNewButton);
+		
 		
 		JButton btnNewButton_1 = new JButton("Salvar");
 		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
 		panel_1.add(btnNewButton_1);
 		
-		JButton botaoExcluir = new JButton("Excluir");
+		
 		botaoExcluir.setEnabled(false);
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -148,10 +172,28 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		
+		contentPane.add(botaoCancelar, "cell 2 2,growx");
+		botaoCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textoNome.setEnabled(false);
+				textoCpf.setEnabled(false);
+				textoEndereco.setEnabled(false);
+				textoTelefone.setEnabled(false);
+				textoEmail.setEnabled(false);
+				botaoCancelar.setEnabled(false);
+				botaoCancelar.setVisible(false);
+				botaoCadastrar.setEnabled(false);
+				botaoLimpar.setEnabled(false);
+				botaoExcluir.setEnabled(false);
+			}
+		});
+		botaoCancelar.setVisible(false);
+		
 		JLabel labelNome = new JLabel("Nome completo");
 		contentPane.add(labelNome, "cell 0 3,alignx right");
 		
 		textoNome = new JTextField();
+		textoNome.setEnabled(false);
 		contentPane.add(textoNome, "cell 1 3,growx");
 		textoNome.setColumns(10);
 		
@@ -159,6 +201,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(labelCpf, "cell 0 4,alignx right");
 		
 		textoCpf = new JTextField();
+		textoCpf.setEnabled(false);
 		contentPane.add(textoCpf, "cell 1 4,growx");
 		textoCpf.setColumns(10);
 		
@@ -166,6 +209,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(labelEndereco, "cell 0 5,alignx right");
 		
 		textoEndereco = new JTextField();
+		textoEndereco.setEnabled(false);
 		contentPane.add(textoEndereco, "cell 1 5,growx");
 		textoEndereco.setColumns(10);
 		
@@ -173,6 +217,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(labelTelefone, "cell 0 6,alignx right");
 		
 		textoTelefone = new JTextField();
+		textoTelefone.setEnabled(false);
 		contentPane.add(textoTelefone, "cell 1 6,growx");
 		textoTelefone.setColumns(10);
 		
@@ -180,11 +225,13 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(labelEmail, "cell 0 7,alignx right");
 		
 		textoEmail = new JTextField();
+		textoEmail.setEnabled(false);
 		textoEmail.setToolTipText("");
 		contentPane.add(textoEmail, "cell 1 7,growx");
 		textoEmail.setColumns(10);
 		
-		JButton botaoCadastrar = new JButton("Cadastrar");
+		
+		botaoCadastrar.setEnabled(false);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirmarCadastro = JOptionPane.showConfirmDialog(null, "Deseja confirmar o cadastro?");
@@ -214,19 +261,38 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(textoSituacao, "cell 0 8,alignx right");
 		
 		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
+		radioSituacaoAtivo.setEnabled(false);
 		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 8");
 		contentPane.add(botaoCadastrar, "cell 1 9,growx");
 		
-		JButton botaoLimpar = new JButton("Limpar campos");
+		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
+		radioSituacaoAtivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selecionado = "";
+				if(radioSituacaoAtivo.isSelected()) {
+					selecionado = "Ativo";
+				}else if(radioSituacaoInativo.isSelected()) {
+					selecionado = "Inativo";
+				}else {
+					selecionado = "Situação não indicada";
+				}
+			}
+		});
+		radioSituacaoInativo.setEnabled(false);
+		contentPane.add(radioSituacaoInativo, "cell 1 8");
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup.add(radioSituacaoAtivo);
+		buttonGroup.add(radioSituacaoInativo);
+		
+		
+		botaoLimpar.setEnabled(false);
 		botaoLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparCampos();
 			}
 		});
 		contentPane.add(botaoLimpar, "cell 2 9,growx");
-		
-		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
-		contentPane.add(radioSituacaoInativo, "cell 1 8");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "cell 0 11 3 1,grow");
@@ -239,6 +305,8 @@ public class TelaCadastroCliente extends JFrame {
 //				ClienteEntity cliente = clientes.get(table.getSelectedRow());
 //				JOptionPane.showMessageDialog(null, "Nome do usuário: " + cliente.getNome());
 				botaoExcluir.setEnabled(true);
+				botaoCancelar.setEnabled(true);
+				botaoCancelar.setVisible(true);
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
