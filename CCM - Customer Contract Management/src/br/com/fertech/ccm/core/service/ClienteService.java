@@ -10,6 +10,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteService {
 	
+	public ClienteEntity buscarClientePorId(long codigoCliente) throws BusinessException{
+		return new ClienteBO().buscarClientePorId(codigoCliente);
+	}
+	
 	public void excluirCliente(long cliente) throws BusinessException {
 		new ClienteBO().excluirCliente(cliente);
 	}

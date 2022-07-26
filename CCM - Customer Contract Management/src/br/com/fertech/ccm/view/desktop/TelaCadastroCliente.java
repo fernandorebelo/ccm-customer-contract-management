@@ -53,6 +53,16 @@ public class TelaCadastroCliente extends JFrame {
 	private JTextField textoEndereco;
 	private JTextField textoTelefone;
 	private JTextField textoEmail;
+	private JTextField textoId;
+	
+	JButton botaoCadastrar = new JButton("Cadastrar");
+	JButton botaoLimpar = new JButton("Limpar campos");
+	JButton botaoExcluir = new JButton("Excluir");
+	JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
+	JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
+	JButton botaoEditar = new JButton("Editar");
+	JButton botaoSalvar = new JButton("Salvar");
+	JButton botaoCancelar = new JButton("Cancelar");
 	
 
 	/**
@@ -80,12 +90,20 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][]", "[][][][][][][][][][][][][grow]"));
 		
-		JButton botaoCadastrar = new JButton("Cadastrar");
-		JButton botaoLimpar = new JButton("Limpar campos");
-		JButton botaoCancelar = new JButton("Cancelar");
-		JButton botaoExcluir = new JButton("Excluir");
+		
+		botaoEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteEntity clienteSelecionado = clientes.get(table.getSelectedRow());
+//				TelaCadastroCliente tcc = new TelaCadastroCliente();
+//				tcc.carregarClientePorId(clienteSelecionado.getCodigoCliente());
+//				tcc.setVisible(true);
+				ativarCampos();
+				carregarClientePorId(clienteSelecionado.getCodigoCliente());
+			}
+		});
+		
 		
 		
 		JPanel panel = new JPanel();
@@ -114,24 +132,18 @@ public class TelaCadastroCliente extends JFrame {
 		JButton btnNewButton = new JButton("Novo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textoNome.setEnabled(true);
-				textoCpf.setEnabled(true);
-				textoEndereco.setEnabled(true);
-				textoTelefone.setEnabled(true);
-				textoEmail.setEnabled(true);
-				botaoCancelar.setEnabled(true);
-				botaoCancelar.setVisible(true);
-				botaoCadastrar.setEnabled(true);
-				botaoLimpar.setEnabled(true);
+				ativarCampos();
+				
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
 		panel_1.add(btnNewButton);
 		
 		
-		JButton btnNewButton_1 = new JButton("Salvar");
-		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
-		panel_1.add(btnNewButton_1);
+		
+		botaoSalvar.setEnabled(false);
+		botaoSalvar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
+		panel_1.add(botaoSalvar);
 		
 		
 		botaoExcluir.setEnabled(false);
@@ -156,13 +168,24 @@ public class TelaCadastroCliente extends JFrame {
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(botaoExcluir);
 		
-		JButton btnNewButton_3 = new JButton("Atualizar");
-		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
-		panel_1.add(btnNewButton_3);
+		
+		botaoEditar.setEnabled(false);
+		botaoEditar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
+		panel_1.add(botaoEditar);
+		
+		panel_1.add(botaoCancelar);
+		botaoCancelar.setEnabled(false);
+		botaoCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				desativarCampos();
+				limparCampos();
+			}
+		});
 		
 		JButton botaoSair = new JButton("Voltar");
+		contentPane.add(botaoSair, "cell 2 2,growx");
 		botaoSair.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\retornar.png"));
-		panel_1.add(botaoSair);
 		botaoSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
@@ -172,62 +195,54 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		
-		contentPane.add(botaoCancelar, "cell 2 2,growx");
-		botaoCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textoNome.setEnabled(false);
-				textoCpf.setEnabled(false);
-				textoEndereco.setEnabled(false);
-				textoTelefone.setEnabled(false);
-				textoEmail.setEnabled(false);
-				botaoCancelar.setEnabled(false);
-				botaoCancelar.setVisible(false);
-				botaoCadastrar.setEnabled(false);
-				botaoLimpar.setEnabled(false);
-				botaoExcluir.setEnabled(false);
-			}
-		});
-		botaoCancelar.setVisible(false);
+		JLabel labelId = new JLabel("C\u00F3digo");
+		contentPane.add(labelId, "cell 0 3,alignx trailing");
+		
+		textoId = new JTextField();
+		textoId.setEditable(false);
+		textoId.setEnabled(false);
+		contentPane.add(textoId, "cell 1 3,growx");
+		textoId.setColumns(10);
 		
 		JLabel labelNome = new JLabel("Nome completo");
-		contentPane.add(labelNome, "cell 0 3,alignx right");
+		contentPane.add(labelNome, "cell 0 4,alignx right");
 		
 		textoNome = new JTextField();
 		textoNome.setEnabled(false);
-		contentPane.add(textoNome, "cell 1 3,growx");
+		contentPane.add(textoNome, "cell 1 4,growx");
 		textoNome.setColumns(10);
 		
 		JLabel labelCpf = new JLabel("CPF");
-		contentPane.add(labelCpf, "cell 0 4,alignx right");
+		contentPane.add(labelCpf, "cell 0 5,alignx right");
 		
 		textoCpf = new JTextField();
 		textoCpf.setEnabled(false);
-		contentPane.add(textoCpf, "cell 1 4,growx");
+		contentPane.add(textoCpf, "cell 1 5,growx");
 		textoCpf.setColumns(10);
 		
 		JLabel labelEndereco = new JLabel("Endere\u00E7o");
-		contentPane.add(labelEndereco, "cell 0 5,alignx right");
+		contentPane.add(labelEndereco, "cell 0 6,alignx right");
 		
 		textoEndereco = new JTextField();
 		textoEndereco.setEnabled(false);
-		contentPane.add(textoEndereco, "cell 1 5,growx");
+		contentPane.add(textoEndereco, "cell 1 6,growx");
 		textoEndereco.setColumns(10);
 		
 		JLabel labelTelefone = new JLabel("Telefone");
-		contentPane.add(labelTelefone, "cell 0 6,alignx right");
+		contentPane.add(labelTelefone, "cell 0 7,alignx right");
 		
 		textoTelefone = new JTextField();
 		textoTelefone.setEnabled(false);
-		contentPane.add(textoTelefone, "cell 1 6,growx");
+		contentPane.add(textoTelefone, "cell 1 7,growx");
 		textoTelefone.setColumns(10);
 		
 		JLabel labelEmail = new JLabel("Email");
-		contentPane.add(labelEmail, "cell 0 7,alignx right");
+		contentPane.add(labelEmail, "cell 0 8,alignx right");
 		
 		textoEmail = new JTextField();
 		textoEmail.setEnabled(false);
 		textoEmail.setToolTipText("");
-		contentPane.add(textoEmail, "cell 1 7,growx");
+		contentPane.add(textoEmail, "cell 1 8,growx");
 		textoEmail.setColumns(10);
 		
 		
@@ -258,28 +273,17 @@ public class TelaCadastroCliente extends JFrame {
 		});
 		
 		JLabel textoSituacao = new JLabel("Situa\u00E7\u00E3o");
-		contentPane.add(textoSituacao, "cell 0 8,alignx right");
+		contentPane.add(textoSituacao, "cell 0 9,alignx right");
 		
-		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
+		
 		radioSituacaoAtivo.setEnabled(false);
-		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 8");
-		contentPane.add(botaoCadastrar, "cell 1 9,growx");
+		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 9");
+		contentPane.add(botaoCadastrar, "cell 1 10,growx");
 		
-		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
-		radioSituacaoAtivo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String selecionado = "";
-				if(radioSituacaoAtivo.isSelected()) {
-					selecionado = "Ativo";
-				}else if(radioSituacaoInativo.isSelected()) {
-					selecionado = "Inativo";
-				}else {
-					selecionado = "Situação não indicada";
-				}
-			}
-		});
+		
+		
 		radioSituacaoInativo.setEnabled(false);
-		contentPane.add(radioSituacaoInativo, "cell 1 8");
+		contentPane.add(radioSituacaoInativo, "cell 1 9");
 		
 		ButtonGroup buttonGroup = new ButtonGroup();
 		buttonGroup.add(radioSituacaoAtivo);
@@ -292,10 +296,10 @@ public class TelaCadastroCliente extends JFrame {
 				limparCampos();
 			}
 		});
-		contentPane.add(botaoLimpar, "cell 2 9,growx");
+		contentPane.add(botaoLimpar, "cell 2 10,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 11 3 1,grow");
+		contentPane.add(scrollPane, "cell 0 12 3 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -306,7 +310,8 @@ public class TelaCadastroCliente extends JFrame {
 //				JOptionPane.showMessageDialog(null, "Nome do usuário: " + cliente.getNome());
 				botaoExcluir.setEnabled(true);
 				botaoCancelar.setEnabled(true);
-				botaoCancelar.setVisible(true);
+				botaoEditar.setEnabled(true);
+				botaoSalvar.setEnabled(true);
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -348,7 +353,7 @@ public class TelaCadastroCliente extends JFrame {
 												clienteEntity.getNome(),
 												clienteEntity.getCpf(),
 												clienteEntity.getEndereco(),
-												clienteEntity.getEmail(),
+												clienteEntity.getTelefone(),
 												clienteEntity.getEmail()
 							});
 				}
@@ -356,6 +361,59 @@ public class TelaCadastroCliente extends JFrame {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Erro ao buscar clientes no banco de dados: " + e.getMensagemDeErro());
 			}
+		}
+		
+
+		public void carregarClientePorId(long codigoCliente) {
+			try {
+				ClienteEntity clienteEncontrado = new ClienteService().buscarClientePorId(codigoCliente);
+				
+				if(clienteEncontrado == null) {
+					JOptionPane.showMessageDialog(null, "Cliente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+				}else {
+					textoId.setText(""+clienteEncontrado.getCodigoCliente());
+					textoNome.setText(clienteEncontrado.getNome());
+					textoCpf.setText(clienteEncontrado.getCpf());
+					textoEndereco.setText(clienteEncontrado.getEndereco());
+					textoTelefone.setText(clienteEncontrado.getTelefone());
+					textoEmail.setText(clienteEncontrado.getEmail());
+				}
+				
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMensagemDeErro(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+		public void ativarCampos() {
+			textoNome.setEnabled(true);
+			textoCpf.setEnabled(true);
+			textoEndereco.setEnabled(true);
+			textoTelefone.setEnabled(true);
+			textoEmail.setEnabled(true);
+			botaoCancelar.setEnabled(true);
+			botaoCadastrar.setEnabled(true);
+			botaoLimpar.setEnabled(true);
+			radioSituacaoAtivo.setEnabled(true);
+			radioSituacaoInativo.setEnabled(true);
+		}
+		
+		public void desativarCampos() {
+			textoNome.setEnabled(false);
+			textoCpf.setEnabled(false);
+			textoEndereco.setEnabled(false);
+			textoTelefone.setEnabled(false);
+			textoEmail.setEnabled(false);
+			botaoCancelar.setEnabled(false);
+			botaoCadastrar.setEnabled(false);
+			botaoLimpar.setEnabled(false);
+			botaoExcluir.setEnabled(false);
+			radioSituacaoAtivo.setEnabled(false);
+			radioSituacaoAtivo.setSelected(false);
+			radioSituacaoInativo.setEnabled(false);
+			radioSituacaoInativo.setSelected(false);
+			botaoEditar.setEnabled(false);
+			botaoSalvar.setEnabled(false);
 		}
 
 }

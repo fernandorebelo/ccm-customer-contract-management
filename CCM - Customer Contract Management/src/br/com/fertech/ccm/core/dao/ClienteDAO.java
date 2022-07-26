@@ -16,6 +16,48 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteDAO {
 	
+	public ClienteEntity buscarClientePorId(long codigoCliente) throws BusinessException{
+		String sql = "SELECT ID_CLIENTE, NM_CLIENTE, CPF_CLIENTE, END_CLIENTE, TEL_CLIENTE, EMAIL_CLIENTE FROM CLIENTE WHERE ID_CLIENTE = ?";
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setLong(1, codigoCliente);
+			
+			rs = ps.executeQuery();
+			
+			ClienteEntity clienteEncontrado = null;
+			
+			if(rs.next()) {
+				clienteEncontrado = new ClienteEntity();
+				clienteEncontrado.setCodigoCliente(rs.getLong("ID_CLIENTE"));
+				clienteEncontrado.setNome(rs.getString("NM_CLIENTE"));
+				clienteEncontrado.setCpf(rs.getString("CPF_CLIENTE"));
+				clienteEncontrado.setEndereco(rs.getString("END_CLIENTE"));
+				clienteEncontrado.setTelefone(rs.getString("TEL_CLIENTE"));
+				clienteEncontrado.setEmail(rs.getString("EMAIL_CLIENTE"));
+			}
+			return clienteEncontrado;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao buscar cliente.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
 	public void excluirCliente(long cliente) throws BusinessException {
 		
 		String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE = ?";

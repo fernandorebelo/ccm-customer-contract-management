@@ -42,10 +42,10 @@ public class PrincipalTeste {
 //		projeto1.setCliente(cliente1);
 //		projeto1.setFuncionario(null);
 		
-		FuncionarioEntity fent = new FuncionarioEntity();
-		fent.setNome("Julia");
-		fent.setCargo("Projetista");
-		fent.setRegistroProfissional("CAU A123123");
+//		FuncionarioEntity fent = new FuncionarioEntity();
+//		fent.setNome("Julia");
+//		fent.setCargo("Projetista");
+//		fent.setRegistroProfissional("CAU A123123");
 		
 		
 		//chamando core/backend para salvar o FUNCIONARIO
@@ -56,10 +56,28 @@ public class PrincipalTeste {
 //			e.printStackTrace();
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}
-		List<ClienteEntity> clientes = new ClienteService().listarCliente();
-		for (ClienteEntity clienteEntity : clientes) {
-			System.out.println("Nome: " + clienteEntity.getNome() + "\nCódigo: " + clienteEntity.getCodigoCliente());
-		}
+//		List<ClienteEntity> clientes = new ClienteService().listarCliente();
+//		for (ClienteEntity clienteEntity : clientes) {
+//			System.out.println("Nome: " + clienteEntity.getNome() + "\nCódigo: " + clienteEntity.getCodigoCliente());
+//		}
+		
+		
+		
+		//buscar cliente
+//		ClienteEntity clienteEncontrado = new ClienteService().buscarClientePorId(8);
+//		
+//		try {
+//			if(clienteEncontrado != null) {
+//				System.out.println(clienteEncontrado.getCodigoCliente()+" - " + clienteEncontrado.getNome());
+//			}else {
+//				System.out.println("Cliente não encontrado");
+//			}
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+		
 		
 		
 		//chamando core/backend para salvar o cliente		

@@ -13,6 +13,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteBO {
 	
+	public ClienteEntity buscarClientePorId(long codigoCliente) throws BusinessException{
+		return new ClienteDAO().buscarClientePorId(codigoCliente);
+	}
+	
 	public void excluirCliente(long cliente) throws BusinessException{
 		new ClienteDAO().excluirCliente(cliente);
 	}
