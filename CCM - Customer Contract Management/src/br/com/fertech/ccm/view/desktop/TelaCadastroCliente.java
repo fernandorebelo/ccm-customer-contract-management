@@ -63,6 +63,7 @@ public class TelaCadastroCliente extends JFrame {
 	JButton botaoEditar = new JButton("Editar");
 	JButton botaoSalvar = new JButton("Salvar");
 	JButton botaoCancelar = new JButton("Cancelar");
+	JButton botaoNovo = new JButton("Novo");
 	
 
 	/**
@@ -90,17 +91,14 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][]", "[][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][]", "[][][][][][][][][][][][][][grow]"));
 		
 		
 		botaoEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClienteEntity clienteSelecionado = clientes.get(table.getSelectedRow());
-//				TelaCadastroCliente tcc = new TelaCadastroCliente();
-//				tcc.carregarClientePorId(clienteSelecionado.getCodigoCliente());
-//				tcc.setVisible(true);
-				ativarCampos();
 				carregarClientePorId(clienteSelecionado.getCodigoCliente());
+				ativarCamposEditar();
 			}
 		});
 		
@@ -129,15 +127,42 @@ public class TelaCadastroCliente extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
 		
-		JButton btnNewButton = new JButton("Novo");
-		btnNewButton.addActionListener(new ActionListener() {
+		
+		botaoNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ativarCampos();
+				ativarCamposNovo();
 				
 			}
 		});
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
-		panel_1.add(btnNewButton);
+		botaoNovo.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
+		panel_1.add(botaoNovo);
+		botaoSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int confirmarAlteracao = JOptionPane.showConfirmDialog(null, "Deseja confirmar o alteração?");
+				if(confirmarAlteracao == 0) {
+					ClienteEntity clienteEntity = new ClienteEntity();
+					clienteEntity.setCodigoCliente(Long.parseLong(textoId.getText()));
+					clienteEntity.setNome(textoNome.getText());
+					clienteEntity.setCpf(textoCpf.getText());
+					clienteEntity.setEndereco(textoEndereco.getText());
+					clienteEntity.setTelefone(textoTelefone.getText());
+					clienteEntity.setEmail(textoEmail.getText());
+					
+					try {
+						ClienteService cs = new ClienteService();
+						cs.alterarCliente(clienteEntity);
+						JOptionPane.showMessageDialog(null, "Cliente " + textoNome.getText() + " alterado com sucesso.");
+						limparCampos();
+						desativarCampos();
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Alteração cancelada.");
+					desativarCampos();
+				}
+			}
+		});
 		
 		
 		
@@ -156,6 +181,7 @@ public class TelaCadastroCliente extends JFrame {
 						new ClienteService().excluirCliente(clienteSelecionado.getCodigoCliente());
 						popularTabela();
 						botaoExcluir.setEnabled(false);
+						desativarCampos();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
@@ -263,11 +289,13 @@ public class TelaCadastroCliente extends JFrame {
 						cs.salvarCliente(clienteEntity);
 						JOptionPane.showMessageDialog(null, "Cliente " + textoNome.getText() + " cadastrado com sucesso.");
 						limparCampos();
+						desativarCampos();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "Cadastro cancelado.");
+					desativarCampos();
 				}
 			}
 		});
@@ -296,18 +324,23 @@ public class TelaCadastroCliente extends JFrame {
 				limparCampos();
 			}
 		});
-		contentPane.add(botaoLimpar, "cell 2 10,growx");
+		contentPane.add(botaoLimpar, "flowx,cell 2 10,growx");
+		
+		JButton botaoAtualizarTabela = new JButton("Atualizar");
+		botaoAtualizarTabela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popularTabela();
+			}
+		});
+		contentPane.add(botaoAtualizarTabela, "cell 2 11,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 12 3 1,grow");
+		contentPane.add(scrollPane, "cell 0 13 3 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				JOptionPane.showMessageDialog(null, "Linha selecionada: " + table.getSelectedRow());
-//				ClienteEntity cliente = clientes.get(table.getSelectedRow());
-//				JOptionPane.showMessageDialog(null, "Nome do usuário: " + cliente.getNome());
 				botaoExcluir.setEnabled(true);
 				botaoCancelar.setEnabled(true);
 				botaoEditar.setEnabled(true);
@@ -385,7 +418,7 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		}
 		
-		public void ativarCampos() {
+		public void ativarCamposNovo() {
 			textoNome.setEnabled(true);
 			textoCpf.setEnabled(true);
 			textoEndereco.setEnabled(true);
@@ -396,6 +429,20 @@ public class TelaCadastroCliente extends JFrame {
 			botaoLimpar.setEnabled(true);
 			radioSituacaoAtivo.setEnabled(true);
 			radioSituacaoInativo.setEnabled(true);
+			textoId.setText("");
+		}
+		
+		public void ativarCamposEditar() {
+			textoNome.setEnabled(true);
+			textoCpf.setEnabled(true);
+			textoEndereco.setEnabled(true);
+			textoTelefone.setEnabled(true);
+			textoEmail.setEnabled(true);
+			botaoCancelar.setEnabled(true);
+			botaoLimpar.setEnabled(true);
+			radioSituacaoAtivo.setEnabled(true);
+			radioSituacaoInativo.setEnabled(true);
+			botaoNovo.setEnabled(false);
 		}
 		
 		public void desativarCampos() {
@@ -414,6 +461,8 @@ public class TelaCadastroCliente extends JFrame {
 			radioSituacaoInativo.setSelected(false);
 			botaoEditar.setEnabled(false);
 			botaoSalvar.setEnabled(false);
+			botaoNovo.setEnabled(true);
+			textoId.setText("");
 		}
 
 }

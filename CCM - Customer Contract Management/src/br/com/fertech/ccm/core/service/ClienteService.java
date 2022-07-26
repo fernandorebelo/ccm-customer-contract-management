@@ -10,6 +10,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteService {
 	
+	public String alterarCliente(ClienteEntity cliente) throws BusinessException{
+		return new ClienteBO().alterarCliente(cliente);
+	}
+	
 	public ClienteEntity buscarClientePorId(long codigoCliente) throws BusinessException{
 		return new ClienteBO().buscarClientePorId(codigoCliente);
 	}

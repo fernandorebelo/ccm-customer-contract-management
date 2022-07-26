@@ -20,25 +20,25 @@ public class PrincipalTeste {
 
 	public static void main(String[] args) throws BusinessException{
 		//montando objeto com as informações da tela
-		ClienteEntity cliente1 = new ClienteEntity();
-		cliente1.setNome("Fernando Rebelo");
-		cliente1.setCpf("111.111.111-11");
-		cliente1.setEndereco("Rua Milo");
-		cliente1.setTelefone("48988887777");
-		cliente1.setEmail("fernando@fernando.com.br");
+//		ClienteEntity cliente1 = new ClienteEntity();
+//		cliente1.setNome("Amora");
+//		cliente1.setCpf("111.111.111-11");
+//		cliente1.setEndereco("Rua Amora");
+//		cliente1.setTelefone("48988887777");
+//		cliente1.setEmail("amora@amora.com.br");
 		
-		ClienteEntity cliente2 = new ClienteEntity();
-		cliente2.setNome("Jéssica Bett");
-		cliente2.setCpf("06826662973");
-		cliente2.setEndereco("Rua Amora");
-		cliente2.setTelefone("(48) 944442222");
-		cliente2.setEmail("jessica@jessica.com.br");
-		
-		ProjetoEntity projeto1 = new ProjetoEntity();
-		projeto1.setTipoProjeto("Projeto de interiores");
-		projeto1.setAmbiente("sala e cozinha");
-		projeto1.setArea(30.0);
-		projeto1.setValor(3000.0);
+//		ClienteEntity cliente2 = new ClienteEntity();
+//		cliente2.setNome("Jéssica Bett");
+//		cliente2.setCpf("06826662973");
+//		cliente2.setEndereco("Rua Amora");
+//		cliente2.setTelefone("(48) 944442222");
+//		cliente2.setEmail("jessica@jessica.com.br");
+//		
+//		ProjetoEntity projeto1 = new ProjetoEntity();
+//		projeto1.setTipoProjeto("Projeto de interiores");
+//		projeto1.setAmbiente("sala e cozinha");
+//		projeto1.setArea(30.0);
+//		projeto1.setValor(3000.0);
 //		projeto1.setCliente(cliente1);
 //		projeto1.setFuncionario(null);
 		
@@ -80,11 +80,19 @@ public class PrincipalTeste {
 		
 		
 		
-		//chamando core/backend para salvar o cliente		
+//		//chamando core/backend para alterar o cliente		
 //		ClienteService cs = new ClienteService();
+//		ClienteEntity cliente1 = new ClienteEntity();
+//		cliente1.setCodigoCliente(6L);
+//		cliente1.setNome("Amora Tricolor");
+//		cliente1.setCpf("111.111.111-11");
+//		cliente1.setEndereco("Rua Amora Tricolor");
+//		cliente1.setTelefone("48988887777");
+//		cliente1.setEmail("amora@amora.com.br");
 //		try {
-//			System.out.println(cs.salvarCliente(cliente1));
-//			System.out.println(cs.salvarCliente(cliente2));
+//			
+//			System.out.println(cs.alterarCliente(cliente1));
+////			System.out.println(cs.salvarCliente(cliente2));
 //		} catch (BusinessException e) {
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}

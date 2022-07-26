@@ -16,6 +16,39 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteDAO {
 	
+	public String alterarCliente(ClienteEntity cliente) throws BusinessException{
+		String sql = "UPDATE CLIENTE SET NM_CLIENTE = ?, CPF_CLIENTE = ?, END_CLIENTE = ?, TEL_CLIENTE = ?, EMAIL_CLIENTE = ? WHERE ID_CLIENTE = ?";
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getCpf());
+			ps.setString(3, cliente.getEndereco());
+			ps.setString(4, cliente.getTelefone());
+			ps.setString(5, cliente.getEmail());
+			ps.setLong(6, cliente.getCodigoCliente());
+			
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao atualizar os dados do cliente.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return "Cliente alterado com sucesso";
+	}
+	
 	public ClienteEntity buscarClientePorId(long codigoCliente) throws BusinessException{
 		String sql = "SELECT ID_CLIENTE, NM_CLIENTE, CPF_CLIENTE, END_CLIENTE, TEL_CLIENTE, EMAIL_CLIENTE FROM CLIENTE WHERE ID_CLIENTE = ?";
 		
@@ -109,7 +142,7 @@ public class ClienteDAO {
 			while(rs.next()) {
 			//setar valores
 				ClienteEntity cliente = new ClienteEntity();
-				cliente.setCodigoCliente(rs.getInt("ID_CLIENTE"));
+				cliente.setCodigoCliente(rs.getLong("ID_CLIENTE"));
 				cliente.setNome(rs.getString("NM_CLIENTE"));
 				cliente.setCpf(rs.getString("CPF_CLIENTE"));
 				cliente.setEndereco(rs.getString("END_CLIENTE"));

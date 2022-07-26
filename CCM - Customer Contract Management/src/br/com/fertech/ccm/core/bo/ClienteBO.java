@@ -13,6 +13,11 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteBO {
 	
+	public String alterarCliente(ClienteEntity cliente) throws BusinessException{
+		validarCliente(cliente);
+		return new ClienteDAO().alterarCliente(cliente);
+	}
+	
 	public ClienteEntity buscarClientePorId(long codigoCliente) throws BusinessException{
 		return new ClienteDAO().buscarClientePorId(codigoCliente);
 	}
@@ -33,35 +38,7 @@ public class ClienteBO {
 		System.out.println("Cliente - Camada BO - Business Object...");
 		
 		//VALIDAÇÕES ClienteEntity
-			//TODO validar nome
-		if(cliente.getNome() != null && cliente.getNome().equals("")) {
-			throw new BusinessException("Nome precisa ser preenchido.");
-		}
-			//TODO validar cpf
-		if(cliente.getCpf() != null && cliente.getCpf().equals("")) {
-			throw new BusinessException("O CPF precisa ser preenchido");
-		}else if(validarCpf(cliente.getCpf()) != true) {
-			throw new BusinessException("CPF inválido.");
-		}
-			
-			//TODO validar endereco
-		if(cliente.getEndereco() != null && cliente.getEndereco().equals("")) {
-			throw new BusinessException("Endereço precisa ser preenchido.");
-		}
-		
-			//TODO validar telefone
-		if(cliente.getTelefone() != null && cliente.getTelefone().equals("")) {
-			throw new BusinessException("Telefone precisa ser preenchido.");
-		}else if(validarTelefone(cliente.getTelefone()) != true) {
-			throw new BusinessException("Número de telefone inválido. (11 11111 1111)");
-		}
-		
-			//TODO Validação de email
-		if(cliente.getEmail() != null && cliente.getEmail().equals("")) {
-			throw new BusinessException("O campo do e-mail precisa ser preenchido.");
-		}else if(validarEmail(cliente.getEmail()) != true) {
-			throw new BusinessException("Email em formato inválido.");
-		}
+		validarCliente(cliente);
 		
 		ClienteDAO cdao = new ClienteDAO();
 		return cdao.salvarCliente(cliente);
@@ -126,6 +103,38 @@ public class ClienteBO {
 			}
 		}
 		return isCpfValid;
+	}
+	
+	private void validarCliente(ClienteEntity cliente) throws BusinessException {
+		//TODO validar nome
+		if(cliente.getNome() != null && cliente.getNome().equals("")) {
+			throw new BusinessException("Nome precisa ser preenchido.");
+		}
+			//TODO validar cpf
+		if(cliente.getCpf() != null && cliente.getCpf().equals("")) {
+			throw new BusinessException("O CPF precisa ser preenchido");
+		}else if(validarCpf(cliente.getCpf()) != true) {
+			throw new BusinessException("CPF inválido.");
+		}
+			
+			//TODO validar endereco
+		if(cliente.getEndereco() != null && cliente.getEndereco().equals("")) {
+			throw new BusinessException("Endereço precisa ser preenchido.");
+		}
+		
+			//TODO validar telefone
+		if(cliente.getTelefone() != null && cliente.getTelefone().equals("")) {
+			throw new BusinessException("Telefone precisa ser preenchido.");
+		}else if(validarTelefone(cliente.getTelefone()) != true) {
+			throw new BusinessException("Número de telefone inválido. (11 11111 1111)");
+		}
+		
+			//TODO Validação de email
+		if(cliente.getEmail() != null && cliente.getEmail().equals("")) {
+			throw new BusinessException("O campo do e-mail precisa ser preenchido.");
+		}else if(validarEmail(cliente.getEmail()) != true) {
+			throw new BusinessException("Email em formato inválido.");
+		}
 	}
 	
 	
