@@ -41,6 +41,7 @@ public class TelaCadastroProjeto extends JFrame {
 	private JTextField textoAmbiente;
 	private JTextField textoArea;
 	private JTextField textoValor;
+	private JTextField textoCodigo;
 
 	/**
 	 * Launch the application.
@@ -62,12 +63,13 @@ public class TelaCadastroProjeto extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroProjeto() {
+		setTitle("CCM - Customer Contract Management");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][]", "[][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][grow]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -79,15 +81,9 @@ public class TelaCadastroProjeto extends JFrame {
 		JLabel lblNewLabel_1_1 = new JLabel("Nome da Empresa");
 		panel.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_3 = new JLabel(" | ");
-		panel.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_2 = new JLabel("CCM - Customer Contract Management");
-		panel.add(lblNewLabel_2);
-		
 		JLabel lblNewLabel = new JLabel("Cadastro de projetos");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(lblNewLabel, "cell 0 1 3 1,alignx left");
+		contentPane.add(lblNewLabel, "cell 0 1 4 1,alignx left");
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
@@ -125,9 +121,12 @@ public class TelaCadastroProjeto extends JFrame {
 		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
 		panel_1.add(btnNewButton_3);
 		
+		JButton botaoCancelar = new JButton("Cancelar");
+		panel_1.add(botaoCancelar);
+		
 		JButton botaoSair = new JButton("Voltar");
+		contentPane.add(botaoSair, "cell 2 2,growx");
 		botaoSair.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\retornar.png"));
-		panel_1.add(botaoSair);
 		botaoSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
@@ -137,34 +136,43 @@ public class TelaCadastroProjeto extends JFrame {
 			}
 		});
 		
+		JLabel labelCodigo = new JLabel("C\u00F3digo");
+		contentPane.add(labelCodigo, "cell 0 3,alignx trailing");
+		
+		textoCodigo = new JTextField();
+		textoCodigo.setEnabled(false);
+		textoCodigo.setEditable(false);
+		contentPane.add(textoCodigo, "cell 1 3,growx");
+		textoCodigo.setColumns(10);
+		
 		JLabel labelTipoProjeto = new JLabel("Tipo de projeto");
-		contentPane.add(labelTipoProjeto, "cell 0 3,alignx right");
+		contentPane.add(labelTipoProjeto, "cell 0 4,alignx right");
 		
 		textoTipoProjeto = new JTextField();
-		contentPane.add(textoTipoProjeto, "cell 1 3,growx");
+		contentPane.add(textoTipoProjeto, "cell 1 4,growx");
 		textoTipoProjeto.setColumns(10);
 		
 		JLabel labelAmbiente = new JLabel("Ambiente");
-		contentPane.add(labelAmbiente, "cell 0 4,alignx right");
+		contentPane.add(labelAmbiente, "cell 0 5,alignx right");
 		
 		textoAmbiente = new JTextField();
-		contentPane.add(textoAmbiente, "cell 1 4,growx");
+		contentPane.add(textoAmbiente, "cell 1 5,growx");
 		textoAmbiente.setColumns(10);
 		
 		JLabel labelArea = new JLabel("\u00C1rea");
-		contentPane.add(labelArea, "cell 0 5,alignx right");
+		contentPane.add(labelArea, "cell 0 6,alignx right");
 		
 		textoArea = new JTextField();
 		textoArea.setText("0.0");
-		contentPane.add(textoArea, "cell 1 5,growx");
+		contentPane.add(textoArea, "cell 1 6,growx");
 		textoArea.setColumns(10);
 		
 		JLabel labelValor = new JLabel("Valor");
-		contentPane.add(labelValor, "cell 0 6,alignx right");
+		contentPane.add(labelValor, "cell 0 7,alignx right");
 		
 		textoValor = new JTextField();
 		textoValor.setText("0.0");
-		contentPane.add(textoValor, "cell 1 6,growx");
+		contentPane.add(textoValor, "cell 1 7,growx");
 		textoValor.setColumns(10);
 		
 		JButton botaoCadastrar = new JButton("Cadastrar");
@@ -193,13 +201,16 @@ public class TelaCadastroProjeto extends JFrame {
 		});
 		
 		JLabel lblNewLabel_4 = new JLabel("Situa\u00E7\u00E3o");
-		contentPane.add(lblNewLabel_4, "cell 0 7,alignx right");
+		contentPane.add(lblNewLabel_4, "cell 0 8,alignx right");
 		
 		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
-		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 7");
+		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 8");
 		
 		
-		contentPane.add(botaoCadastrar, "cell 1 8,growx");
+		contentPane.add(botaoCadastrar, "cell 1 9,growx");
+		
+		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
+		contentPane.add(radioSituacaoInativo, "cell 1 8");
 		
 		
 		
@@ -209,13 +220,13 @@ public class TelaCadastroProjeto extends JFrame {
 				limparCampos();
 			}
 		});
-		contentPane.add(botaoLimpar, "cell 2 8,growx");
+		contentPane.add(botaoLimpar, "cell 2 9,growx");
 		
-		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
-		contentPane.add(radioSituacaoInativo, "cell 1 7");
+		JButton botaoAtualizar = new JButton("Atualizar");
+		contentPane.add(botaoAtualizar, "cell 2 10,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 10 3 1,grow");
+		contentPane.add(scrollPane, "cell 0 12 4 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {

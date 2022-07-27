@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class TelaInicialSistema extends JFrame {
 
@@ -41,16 +43,17 @@ public class TelaInicialSistema extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaInicialSistema() {
+		setTitle("CCM - Customer Contract Management");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[100px:n][grow]", "[][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[100px:n][][100px:n][grow]", "[][][][][][]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
-		contentPane.add(panel, "cell 0 0 2 1,grow");
+		contentPane.add(panel, "cell 0 0 4 1,grow");
 		
 		JLabel lblNewLabel = new JLabel("Logo");
 		panel.add(lblNewLabel);
@@ -64,13 +67,21 @@ public class TelaInicialSistema extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("CCM - Customer Contract Management");
 		panel.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_4 = new JLabel("Cadastros");
+		JLabel lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\prancheta.png"));
+		contentPane.add(lblNewLabel_5, "flowx,cell 0 1");
+		
+		JLabel lblNewLabel_4 = new JLabel("Administra\u00E7\u00E3o");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 16));
 		contentPane.add(lblNewLabel_4, "cell 0 1");
 		
-		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\prancheta.png"));
-		contentPane.add(lblNewLabel_5, "flowx,cell 0 2");
+		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\aperto de m\u00E3o.png"));
+		contentPane.add(lblNewLabel_8, "flowx,cell 2 1");
+		
+		JLabel labelContratos = new JLabel("Contratos");
+		labelContratos.setFont(new Font("Tahoma", Font.BOLD, 16));
+		contentPane.add(labelContratos, "cell 2 1");
 		
 		JButton botaoClientes = new JButton("Clientes");
 		botaoClientes.addActionListener(new ActionListener() {
@@ -82,9 +93,8 @@ public class TelaInicialSistema extends JFrame {
 		botaoClientes.setIcon(null);
 		contentPane.add(botaoClientes, "cell 0 2,growx");
 		
-		JLabel lblNewLabel_6 = new JLabel("");
-		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\prancheta.png"));
-		contentPane.add(lblNewLabel_6, "flowx,cell 0 3");
+		JButton botaoConsultar = new JButton("Consultar");
+		contentPane.add(botaoConsultar, "cell 2 2,growx");
 		
 		JButton botaoProjetos = new JButton("Projetos");
 		botaoProjetos.addActionListener(new ActionListener() {
@@ -95,10 +105,6 @@ public class TelaInicialSistema extends JFrame {
 		});
 		botaoProjetos.setIcon(null);
 		contentPane.add(botaoProjetos, "cell 0 3,growx");
-		
-		JLabel lblNewLabel_7 = new JLabel("");
-		lblNewLabel_7.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\prancheta.png"));
-		contentPane.add(lblNewLabel_7, "flowx,cell 0 4");
 		
 		JButton botaoFuncionarios = new JButton("Funcion\u00E1rios");
 		botaoFuncionarios.addActionListener(new ActionListener() {
@@ -119,7 +125,7 @@ public class TelaInicialSistema extends JFrame {
 				}
 			}
 		});
-		contentPane.add(botaoFechar, "cell 1 5,alignx right");
+		contentPane.add(botaoFechar, "cell 3 5,alignx right");
 		
 		
 	}

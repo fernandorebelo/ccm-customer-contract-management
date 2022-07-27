@@ -48,8 +48,9 @@ public class TelaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaPrincipal() {
+		setTitle("CCM - Customer Contract Management");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,17 +94,6 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		contentPane.add(botaoLogin, "cell 2 7,growx");
-		
-		JButton botaoFechar = new JButton("Fechar programa");
-		botaoFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int opcao = JOptionPane.showConfirmDialog(null, "Deseja encerrar o programa?");
-				if(opcao == 0) {
-					System.exit(0);
-				}
-			}
-		});
-		contentPane.add(botaoFechar, "cell 2 9,alignx right");
 	}
 
 }

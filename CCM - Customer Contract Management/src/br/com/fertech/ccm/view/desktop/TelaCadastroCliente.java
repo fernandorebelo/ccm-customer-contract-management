@@ -86,12 +86,13 @@ public class TelaCadastroCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastroCliente() {
+		setTitle("CCM - Customer Contract Management");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][]", "[][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][][grow]", "[][][][][][][][][][][][][][grow]"));
 		
 		
 		botaoEditar.addActionListener(new ActionListener() {
@@ -114,15 +115,9 @@ public class TelaCadastroCliente extends JFrame {
 		JLabel lblNewLabel_1_1 = new JLabel("Nome da Empresa");
 		panel.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_3 = new JLabel(" | ");
-		panel.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_2 = new JLabel("CCM - Customer Contract Management");
-		panel.add(lblNewLabel_2);
-		
 		JLabel lblNewLabel = new JLabel("Cadastro de cliente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(lblNewLabel, "cell 0 1 3 1,alignx left");
+		contentPane.add(lblNewLabel, "cell 0 1 4 1,alignx left");
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
@@ -317,6 +312,13 @@ public class TelaCadastroCliente extends JFrame {
 		buttonGroup.add(radioSituacaoAtivo);
 		buttonGroup.add(radioSituacaoInativo);
 		
+		JButton botaoAtualizarTabela = new JButton("Atualizar");
+		botaoAtualizarTabela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popularTabela();
+			}
+		});
+		
 		
 		botaoLimpar.setEnabled(false);
 		botaoLimpar.addActionListener(new ActionListener() {
@@ -325,17 +327,10 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		contentPane.add(botaoLimpar, "flowx,cell 2 10,growx");
-		
-		JButton botaoAtualizarTabela = new JButton("Atualizar");
-		botaoAtualizarTabela.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				popularTabela();
-			}
-		});
 		contentPane.add(botaoAtualizarTabela, "cell 2 11,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 13 3 1,grow");
+		contentPane.add(scrollPane, "cell 0 13 4 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
