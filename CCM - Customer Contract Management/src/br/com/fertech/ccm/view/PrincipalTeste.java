@@ -95,19 +95,18 @@ public class PrincipalTeste {
 		
 		
 		
-//		//chamando core/backend para alterar o cliente		
-//		ClienteService cs = new ClienteService();
-//		ClienteEntity cliente1 = new ClienteEntity();
-//		cliente1.setCodigoCliente(6L);
-//		cliente1.setNome("Amora Tricolor");
-//		cliente1.setCpf("111.111.111-11");
-//		cliente1.setEndereco("Rua Amora Tricolor");
-//		cliente1.setTelefone("48988887777");
-//		cliente1.setEmail("amora@amora.com.br");
+//		//chamando core/backend para alterar o projeto
+//		ProjetoService ps = new ProjetoService();
+//		ProjetoEntity projeto = new ProjetoEntity();
+//		projeto.setCodigo(1L);
+//		projeto.setTipoProjeto("proj int");
+//		projeto.setAmbiente("sala");
+//		projeto.setArea(32.5);
+//		projeto.setValor(2.990);
+//		
 //		try {
 //			
-//			System.out.println(cs.alterarCliente(cliente1));
-////			System.out.println(cs.salvarCliente(cliente2));
+//			System.out.println(ps.alterarProjeto(projeto));
 //		} catch (BusinessException e) {
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}

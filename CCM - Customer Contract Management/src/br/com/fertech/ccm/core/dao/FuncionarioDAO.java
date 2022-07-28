@@ -7,10 +7,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fertech.ccm.core.dao.connection.ConnectionMySQL;
+import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioDAO {
+	
+	public FuncionarioEntity buscarFuncionarioPorId(long codigoFuncionario) throws BusinessException{
+		String sql = "SELECT ID_FUNCIONARIO, NOME_FUNCIONARIO, CARGO_FUNCIONARIO, REGISTRO_FUNCIONARIO FROM FUNCIONARIO WHERE ID_FUNCIONARIO = ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setLong(1, codigoFuncionario);
+			rs = ps.executeQuery();
+			FuncionarioEntity funcionarioEncontrado = null;
+			
+			if(rs.next()) {
+				funcionarioEncontrado = new FuncionarioEntity();
+				funcionarioEncontrado.setCodigoFuncionario(rs.getLong("ID_FUNCIONARIO"));
+				funcionarioEncontrado.setNome(rs.getString("NOME_FUNCIONARIO"));
+				funcionarioEncontrado.setCargo(rs.getString("CARGO_FUNCIONARIO"));
+				funcionarioEncontrado.setRegistroProfissional(rs.getString("REGISTRO_FUNCIONARIO"));
+			}
+			return funcionarioEncontrado;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao buscar funcionário.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	public void excluirFuncionario(long funcionario) throws BusinessException{
 		
