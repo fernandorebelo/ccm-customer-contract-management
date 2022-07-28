@@ -58,8 +58,6 @@ public class TelaCadastroCliente extends JFrame {
 	JButton botaoCadastrar = new JButton("Cadastrar");
 	JButton botaoLimpar = new JButton("Limpar campos");
 	JButton botaoExcluir = new JButton("Excluir");
-	JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
-	JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
 	JButton botaoEditar = new JButton("Editar");
 	JButton botaoSalvar = new JButton("Salvar");
 	JButton botaoCancelar = new JButton("Cancelar");
@@ -294,23 +292,9 @@ public class TelaCadastroCliente extends JFrame {
 				}
 			}
 		});
-		
-		JLabel textoSituacao = new JLabel("Situa\u00E7\u00E3o");
-		contentPane.add(textoSituacao, "cell 0 9,alignx right");
-		
-		
-		radioSituacaoAtivo.setEnabled(false);
-		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 9");
 		contentPane.add(botaoCadastrar, "cell 1 10,growx");
 		
-		
-		
-		radioSituacaoInativo.setEnabled(false);
-		contentPane.add(radioSituacaoInativo, "cell 1 9");
-		
 		ButtonGroup buttonGroup = new ButtonGroup();
-		buttonGroup.add(radioSituacaoAtivo);
-		buttonGroup.add(radioSituacaoInativo);
 		
 		JButton botaoAtualizarTabela = new JButton("Atualizar");
 		botaoAtualizarTabela.addActionListener(new ActionListener() {
@@ -422,8 +406,6 @@ public class TelaCadastroCliente extends JFrame {
 			botaoCancelar.setEnabled(true);
 			botaoCadastrar.setEnabled(true);
 			botaoLimpar.setEnabled(true);
-			radioSituacaoAtivo.setEnabled(true);
-			radioSituacaoInativo.setEnabled(true);
 			textoId.setText("");
 		}
 		
@@ -435,8 +417,6 @@ public class TelaCadastroCliente extends JFrame {
 			textoEmail.setEnabled(true);
 			botaoCancelar.setEnabled(true);
 			botaoLimpar.setEnabled(true);
-			radioSituacaoAtivo.setEnabled(true);
-			radioSituacaoInativo.setEnabled(true);
 			botaoNovo.setEnabled(false);
 		}
 		
@@ -450,10 +430,6 @@ public class TelaCadastroCliente extends JFrame {
 			botaoCadastrar.setEnabled(false);
 			botaoLimpar.setEnabled(false);
 			botaoExcluir.setEnabled(false);
-			radioSituacaoAtivo.setEnabled(false);
-			radioSituacaoAtivo.setSelected(false);
-			radioSituacaoInativo.setEnabled(false);
-			radioSituacaoInativo.setSelected(false);
 			botaoEditar.setEnabled(false);
 			botaoSalvar.setEnabled(false);
 			botaoNovo.setEnabled(true);

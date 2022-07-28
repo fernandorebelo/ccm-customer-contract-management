@@ -188,16 +188,7 @@ public class TelaCadastroFuncionario extends JFrame {
 				}
 			}
 		} ) ;
-		
-		JLabel textoSituacao = new JLabel("Situa\u00E7\u00E3o");
-		contentPane.add(textoSituacao, "cell 0 7,alignx right");
-		
-		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
-		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 7");
 		contentPane.add(botaoCadastrar, "cell 1 9,growx");
-		
-		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
-		contentPane.add(radioSituacaoInativo, "cell 1 7");
 		
 		contentPane.add(botaoCadastrar, "cell 1 7,growx");
 		

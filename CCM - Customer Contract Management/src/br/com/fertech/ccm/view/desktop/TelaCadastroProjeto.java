@@ -200,17 +200,8 @@ public class TelaCadastroProjeto extends JFrame {
 			}
 		});
 		
-		JLabel lblNewLabel_4 = new JLabel("Situa\u00E7\u00E3o");
-		contentPane.add(lblNewLabel_4, "cell 0 8,alignx right");
-		
-		JRadioButton radioSituacaoAtivo = new JRadioButton("Ativo");
-		contentPane.add(radioSituacaoAtivo, "flowx,cell 1 8");
-		
 		
 		contentPane.add(botaoCadastrar, "cell 1 9,growx");
-		
-		JRadioButton radioSituacaoInativo = new JRadioButton("Inativo");
-		contentPane.add(radioSituacaoInativo, "cell 1 8");
 		
 		
 		
