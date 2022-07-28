@@ -161,6 +161,13 @@ public class TelaCadastroProjeto extends JFrame {
 		});
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(botaoExcluir);
+		botaoEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProjetoEntity projetoSelecionado = projetos.get(table.getSelectedRow());
+				carregarProjetoPorId(projetoSelecionado.getCodigo());
+				ativarCamposEditar();
+			}
+		});
 		
 		
 		botaoEditar.setEnabled(false);
@@ -283,8 +290,11 @@ public class TelaCadastroProjeto extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Ativa o botão excluir ao clicar em um campo da tabela
+				//Ativa o botão ao clicar em um campo da tabela
 				botaoExcluir.setEnabled(true);
+				botaoCancelar.setEnabled(true);
+				botaoEditar.setEnabled(true);
+				botaoSalvar.setEnabled(true);
 			}
 		});
 		table.setModel(new DefaultTableModel(
@@ -332,6 +342,26 @@ public class TelaCadastroProjeto extends JFrame {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Erro ao buscar projetos no banco de dados: " + e.getMensagemDeErro());
+			}
+		}
+		
+		public void carregarProjetoPorId(long codigoProjeto) {
+			try {
+				ProjetoEntity projetoEncontrado = new ProjetoService().buscarProjetoPorId(codigoProjeto);
+				
+				if(projetoEncontrado == null) {
+					JOptionPane.showMessageDialog(null, "Projeto não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+				}else {
+					textoId.setText(""+projetoEncontrado.getCodigo());
+					textoTipoProjeto.setText(projetoEncontrado.getTipoProjeto());
+					textoAmbiente.setText(projetoEncontrado.getAmbiente());
+					textoArea.setText(""+projetoEncontrado.getArea());
+					textoValor.setText(""+projetoEncontrado.getValor());
+				}
+				
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMensagemDeErro(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
