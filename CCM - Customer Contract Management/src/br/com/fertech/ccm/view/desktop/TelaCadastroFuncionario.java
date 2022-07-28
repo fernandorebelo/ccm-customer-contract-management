@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.service.ClienteService;
 import br.com.fertech.ccm.core.service.FuncionarioService;
@@ -39,7 +40,15 @@ public class TelaCadastroFuncionario extends JFrame {
 	private JTextField textoRegistro;
 	private JTable table;
 	private List<FuncionarioEntity> funcionarios;
-	private JTextField textoCodigo;
+	private JTextField textoId;
+	
+	JButton botaoCancelar = new JButton("Cancelar");
+	JButton botaoCadastrar = new JButton("Cadastrar");
+	JButton botaoLimpar = new JButton("Limpar campos");
+	JButton botaoExcluir = new JButton("Excluir");
+	JButton botaoEditar = new JButton("Editar");
+	JButton botaoSalvar = new JButton("Salvar");
+	JButton botaoNovo = new JButton("Novo");
 
 	/**
 	 * Launch the application.
@@ -85,16 +94,49 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
+		botaoNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ativarCamposNovo();
+			}
+		});
 		
-		JButton btnNewButton = new JButton("Novo");
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
-		panel_1.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Salvar");
-		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
-		panel_1.add(btnNewButton_1);
+		botaoNovo.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
+		panel_1.add(botaoNovo);
+		botaoSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int confirmarAlteracao = JOptionPane.showConfirmDialog(null, "Deseja confirmar o alteração?");
+				if(confirmarAlteracao == 0) {
+					FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
+					funcionarioEntity.setCodigoFuncionario(Long.parseLong(textoId.getText()));
+					funcionarioEntity.setNome(textoNome.getText());
+					funcionarioEntity.setCargo(textoCargo.getText());
+					funcionarioEntity.setRegistroProfissional(textoRegistro.getText());
+					
+					try {
+						FuncionarioService fs = new FuncionarioService();
+						fs.alterarFuncionario(funcionarioEntity);
+						JOptionPane.showMessageDialog(null, "Funcionário " + textoNome.getText() + " alterado com sucesso.");
+						limparCampos();
+						desativarCampos();
+						popularTabela();
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Alteração cancelada.");
+					desativarCampos();
+				}
+			}
+		});
 		
-		JButton botaoExcluir = new JButton("Excluir");
+		
+		botaoSalvar.setEnabled(false);
+		botaoSalvar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
+		panel_1.add(botaoSalvar);
+		
+		
+		botaoExcluir.setEnabled(false);
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FuncionarioEntity funcionarioSelecionado = funcionarios.get(table.getSelectedRow());
@@ -104,6 +146,7 @@ public class TelaCadastroFuncionario extends JFrame {
 						new FuncionarioService().excluirFuncionario(funcionarioSelecionado.getCodigoFuncionario());
 						popularTabela();
 						botaoExcluir.setEnabled(false);
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
@@ -115,12 +158,27 @@ public class TelaCadastroFuncionario extends JFrame {
 		});
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(botaoExcluir);
+		botaoEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FuncionarioEntity funcionarioSelecionado = funcionarios.get(table.getSelectedRow());
+				carregarFuncionarioPorId(funcionarioSelecionado.getCodigoFuncionario());
+				ativarCamposEditar();
+			}
+		});
 		
-		JButton botaoEditar = new JButton("Editar");
+		
+		botaoEditar.setEnabled(false);
 		botaoEditar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
 		panel_1.add(botaoEditar);
+		botaoCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				desativarCampos();
+				limparCampos();
+			}
+		});
 		
-		JButton botaoCancelar = new JButton("Cancelar");
+		
+		botaoCancelar.setEnabled(false);
 		panel_1.add(botaoCancelar);
 		
 		JButton botaoSair = new JButton("Voltar");
@@ -138,16 +196,17 @@ public class TelaCadastroFuncionario extends JFrame {
 		JLabel labelCodigo = new JLabel("C\u00F3digo");
 		contentPane.add(labelCodigo, "cell 0 3,alignx trailing");
 		
-		textoCodigo = new JTextField();
-		textoCodigo.setEnabled(false);
-		textoCodigo.setEditable(false);
-		contentPane.add(textoCodigo, "cell 1 3,growx");
-		textoCodigo.setColumns(10);
+		textoId = new JTextField();
+		textoId.setEnabled(false);
+		textoId.setEditable(false);
+		contentPane.add(textoId, "cell 1 3,growx");
+		textoId.setColumns(10);
 		
 		JLabel labelNome = new JLabel("Nome");
 		contentPane.add(labelNome, "cell 0 4,alignx right");
 		
 		textoNome = new JTextField();
+		textoNome.setEnabled(false);
 		contentPane.add(textoNome, "cell 1 4,growx");
 		textoNome.setColumns(10);
 		
@@ -155,6 +214,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane.add(labelCargo, "cell 0 5,alignx right");
 		
 		textoCargo = new JTextField();
+		textoCargo.setEnabled(false);
 		contentPane.add(textoCargo, "cell 1 5,growx");
 		textoCargo.setColumns(10);
 		
@@ -162,10 +222,12 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane.add(labelRegistro, "cell 0 6,alignx right");
 		
 		textoRegistro = new JTextField();
+		textoRegistro.setEnabled(false);
 		contentPane.add(textoRegistro, "cell 1 6,growx");
 		textoRegistro.setColumns(10);
 		
-		JButton botaoCadastrar = new JButton("Cadastrar");
+		
+		botaoCadastrar.setEnabled(false);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirmarCadastro = JOptionPane.showConfirmDialog(null, "Deseja confirmar o cadastro?");
@@ -180,11 +242,14 @@ public class TelaCadastroFuncionario extends JFrame {
 						fs.salvarFuncionario(funcionarioEntity);
 						JOptionPane.showMessageDialog(null, "Funcionário " + textoNome.getText() + " cadastrado com sucesso.");
 						limparCampos();
+						desativarCampos();
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "Cadastro cancelado.");
+					desativarCampos();
 				}
 			}
 		} ) ;
@@ -192,7 +257,8 @@ public class TelaCadastroFuncionario extends JFrame {
 		
 		contentPane.add(botaoCadastrar, "cell 1 7,growx");
 		
-		JButton botaoLimpar = new JButton("Limpar campos");
+		
+		botaoLimpar.setEnabled(false);
 		botaoLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparCampos();
@@ -203,6 +269,11 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane.add(botaoLimpar, "cell 2 7,growx");
 		
 		JButton botaoAtualizar = new JButton("Atualizar");
+		botaoAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popularTabela();
+			}
+		});
 		contentPane.add(botaoAtualizar, "cell 2 10,growx");
 		
 		//tabela
@@ -214,6 +285,9 @@ public class TelaCadastroFuncionario extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				botaoExcluir.setEnabled(true);
+				botaoCancelar.setEnabled(true);
+				botaoEditar.setEnabled(true);
+				botaoSalvar.setEnabled(true);
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -258,10 +332,62 @@ public class TelaCadastroFuncionario extends JFrame {
 		}
 		
 	}
+	
+	public void carregarFuncionarioPorId(long codigoCliente) {
+		try {
+			FuncionarioEntity funcionarioEncontrado = new FuncionarioService().buscarFuncionarioPorId(codigoCliente);
+			
+			if(funcionarioEncontrado == null) {
+				JOptionPane.showMessageDialog(null, "Funcionário não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}else {
+				textoId.setText(""+funcionarioEncontrado.getCodigoFuncionario());
+				textoNome.setText(funcionarioEncontrado.getNome());
+				textoCargo.setText(funcionarioEncontrado.getCargo());
+				textoRegistro.setText(funcionarioEncontrado.getRegistroProfissional());
+			}
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMensagemDeErro(), "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 	public void limparCampos() {
 		textoNome.setText("");
 		textoCargo.setText("");
 		textoRegistro.setText("");
+	}
+	
+	public void ativarCamposNovo() {
+		textoNome.setEnabled(true);
+		textoCargo.setEnabled(true);
+		textoRegistro.setEnabled(true);
+		botaoCancelar.setEnabled(true);
+		botaoCadastrar.setEnabled(true);
+		botaoLimpar.setEnabled(true);
+		textoId.setText("");
+	}
+	
+	public void ativarCamposEditar() {
+		textoNome.setEnabled(true);
+		textoCargo.setEnabled(true);
+		textoRegistro.setEnabled(true);
+		botaoCancelar.setEnabled(true);
+		botaoLimpar.setEnabled(true);
+		botaoNovo.setEnabled(false);
+	}
+	
+	public void desativarCampos() {
+		textoNome.setEnabled(false);
+		textoCargo.setEnabled(false);
+		textoRegistro.setEnabled(false);
+		botaoCancelar.setEnabled(false);
+		botaoCadastrar.setEnabled(false);
+		botaoLimpar.setEnabled(false);
+		botaoExcluir.setEnabled(false);
+		botaoEditar.setEnabled(false);
+		botaoSalvar.setEnabled(false);
+		botaoNovo.setEnabled(true);
+		textoId.setText("");
 	}
 }

@@ -147,6 +147,7 @@ public class TelaCadastroCliente extends JFrame {
 						JOptionPane.showMessageDialog(null, "Cliente " + textoNome.getText() + " alterado com sucesso.");
 						limparCampos();
 						desativarCampos();
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
@@ -175,6 +176,7 @@ public class TelaCadastroCliente extends JFrame {
 						popularTabela();
 						botaoExcluir.setEnabled(false);
 						desativarCampos();
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
@@ -283,6 +285,7 @@ public class TelaCadastroCliente extends JFrame {
 						JOptionPane.showMessageDialog(null, "Cliente " + textoNome.getText() + " cadastrado com sucesso.");
 						limparCampos();
 						desativarCampos();
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}

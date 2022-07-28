@@ -127,6 +127,7 @@ public class TelaCadastroProjeto extends JFrame {
 						JOptionPane.showMessageDialog(null, textoTipoProjeto.getText() + " alterado com sucesso.");
 						limparCampos();
 						desativarCampos();
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
@@ -151,6 +152,7 @@ public class TelaCadastroProjeto extends JFrame {
 						new ProjetoService().excluirProjeto(projetoSelecionado.getCodigo());
 						popularTabela();
 						botaoExcluir.setEnabled(false);
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
@@ -256,6 +258,7 @@ public class TelaCadastroProjeto extends JFrame {
 						ps.salvarProjeto(projetoEntity);
 						JOptionPane.showMessageDialog(null, "O " + textoTipoProjeto.getText() + " foi cadastrado com sucesso.");
 						limparCampos();
+						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
 					}
