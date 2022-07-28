@@ -67,7 +67,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -200,14 +200,14 @@ public class TelaCadastroFuncionario extends JFrame {
 		});
 		
 		
-		contentPane.add(botaoLimpar, "cell 2 8,growx");
+		contentPane.add(botaoLimpar, "cell 2 7,growx");
 		
 		JButton botaoAtualizar = new JButton("Atualizar");
-		contentPane.add(botaoAtualizar, "cell 2 9,growx");
+		contentPane.add(botaoAtualizar, "cell 2 10,growx");
 		
 		//tabela
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 11 4 1,grow");
+		contentPane.add(scrollPane, "cell 0 12 4 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {

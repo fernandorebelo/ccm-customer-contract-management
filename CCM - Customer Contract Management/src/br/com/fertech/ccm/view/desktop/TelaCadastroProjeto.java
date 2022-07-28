@@ -79,7 +79,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n][][grow]", "[][][][][][][][][][][][][grow]"));
 		
 		
 		
