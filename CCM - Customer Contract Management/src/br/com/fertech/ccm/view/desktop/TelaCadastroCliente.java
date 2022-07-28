@@ -173,6 +173,7 @@ public class TelaCadastroCliente extends JFrame {
 				if(opcao == 0) {
 					try {
 						new ClienteService().excluirCliente(clienteSelecionado.getCodigoCliente());
+						JOptionPane.showMessageDialog(null, "Excluído com sucesso.");
 						popularTabela();
 						botaoExcluir.setEnabled(false);
 						desativarCampos();
@@ -326,7 +327,6 @@ public class TelaCadastroCliente extends JFrame {
 				botaoExcluir.setEnabled(true);
 				botaoCancelar.setEnabled(true);
 				botaoEditar.setEnabled(true);
-				botaoSalvar.setEnabled(true);
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -421,6 +421,7 @@ public class TelaCadastroCliente extends JFrame {
 			botaoCancelar.setEnabled(true);
 			botaoLimpar.setEnabled(true);
 			botaoNovo.setEnabled(false);
+			botaoSalvar.setEnabled(true);
 		}
 		
 		public void desativarCampos() {

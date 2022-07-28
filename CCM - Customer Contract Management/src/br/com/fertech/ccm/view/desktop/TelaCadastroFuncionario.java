@@ -144,8 +144,10 @@ public class TelaCadastroFuncionario extends JFrame {
 				if(opcao == 0) {
 					try {
 						new FuncionarioService().excluirFuncionario(funcionarioSelecionado.getCodigoFuncionario());
+						JOptionPane.showMessageDialog(null, "Excluído com sucesso.");
 						popularTabela();
 						botaoExcluir.setEnabled(false);
+						desativarCampos();
 						popularTabela();
 					} catch (BusinessException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
@@ -287,7 +289,6 @@ public class TelaCadastroFuncionario extends JFrame {
 				botaoExcluir.setEnabled(true);
 				botaoCancelar.setEnabled(true);
 				botaoEditar.setEnabled(true);
-				botaoSalvar.setEnabled(true);
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -375,6 +376,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		botaoCancelar.setEnabled(true);
 		botaoLimpar.setEnabled(true);
 		botaoNovo.setEnabled(false);
+		botaoSalvar.setEnabled(true);
 	}
 	
 	public void desativarCampos() {
