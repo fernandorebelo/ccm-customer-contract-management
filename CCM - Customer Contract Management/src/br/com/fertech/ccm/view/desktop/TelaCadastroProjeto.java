@@ -209,6 +209,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane.add(labelTipoProjeto, "cell 0 4,alignx right");
 		
 		textoTipoProjeto = new JTextField();
+		textoTipoProjeto.setEnabled(false);
 		contentPane.add(textoTipoProjeto, "cell 1 4,growx");
 		textoTipoProjeto.setColumns(10);
 		
@@ -216,6 +217,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane.add(labelAmbiente, "cell 0 5,alignx right");
 		
 		textoAmbiente = new JTextField();
+		textoAmbiente.setEnabled(false);
 		contentPane.add(textoAmbiente, "cell 1 5,growx");
 		textoAmbiente.setColumns(10);
 		
@@ -223,6 +225,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane.add(labelArea, "cell 0 6,alignx right");
 		
 		textoArea = new JTextField();
+		textoArea.setEnabled(false);
 		textoArea.setText("0.0");
 		contentPane.add(textoArea, "cell 1 6,growx");
 		textoArea.setColumns(10);
@@ -231,6 +234,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane.add(labelValor, "cell 0 7,alignx right");
 		
 		textoValor = new JTextField();
+		textoValor.setEnabled(false);
 		textoValor.setText("0.0");
 		contentPane.add(textoValor, "cell 1 7,growx");
 		textoValor.setColumns(10);
@@ -387,10 +391,10 @@ public class TelaCadastroProjeto extends JFrame {
 		}
 		
 		public void desativarCampos() {
-			textoTipoProjeto.setEnabled(true);
-			textoAmbiente.setEnabled(true);
-			textoArea.setEnabled(true);
-			textoValor.setEnabled(true);
+			textoTipoProjeto.setEnabled(false);
+			textoAmbiente.setEnabled(false);
+			textoArea.setEnabled(false);
+			textoValor.setEnabled(false);
 			botaoCancelar.setEnabled(false);
 			botaoCadastrar.setEnabled(false);
 			botaoLimpar.setEnabled(false);
