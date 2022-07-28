@@ -388,6 +388,7 @@ public class TelaCadastroProjeto extends JFrame {
 			botaoCancelar.setEnabled(true);
 			botaoLimpar.setEnabled(true);
 			botaoNovo.setEnabled(false);
+			botaoCadastrar.setEnabled(false);
 		}
 		
 		public void desativarCampos() {
