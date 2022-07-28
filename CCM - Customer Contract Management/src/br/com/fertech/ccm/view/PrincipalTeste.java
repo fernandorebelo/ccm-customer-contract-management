@@ -78,6 +78,21 @@ public class PrincipalTeste {
 //			e.printStackTrace();
 //		}
 		
+		//buscar projeto
+//		ProjetoEntity projetoEncontrado = new ProjetoService().buscarProjetoPorId(5);
+//		
+//		try {
+//			if(projetoEncontrado != null) {
+//				System.out.println(projetoEncontrado.getCodigo()+" - " + projetoEncontrado.getAmbiente());
+//			}else {
+//				System.out.println("Projeto não encontrado");
+//			}
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+		
 		
 		
 //		//chamando core/backend para alterar o cliente		

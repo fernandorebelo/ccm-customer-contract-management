@@ -26,7 +26,8 @@ public class ProjetoDAO {
 			ProjetoEntity projetoEncontrado = null;
 			
 			if(rs.next()) {
-				projetoEncontrado.setCodigo(rs.getLong("ID_CLIENTE"));
+				projetoEncontrado = new ProjetoEntity();
+				projetoEncontrado.setCodigo(rs.getLong("ID_PROJETO"));
 				projetoEncontrado.setTipoProjeto(rs.getString("TIPO_PROJETO"));
 				projetoEncontrado.setAmbiente(rs.getString("AMB_PROJETO"));
 				projetoEncontrado.setArea(rs.getDouble("AREA_PROJETO"));
@@ -87,7 +88,7 @@ public class ProjetoDAO {
 			
 			while (rs.next()) {
 				ProjetoEntity projeto = new ProjetoEntity();
-				projeto.setCodigo(rs.getInt("ID_PROJETO"));
+				projeto.setCodigo(rs.getLong("ID_PROJETO"));
 				projeto.setTipoProjeto(rs.getString("TIPO_PROJETO"));
 				projeto.setAmbiente(rs.getString("AMB_PROJETO"));
 				projeto.setArea(rs.getDouble("AREA_PROJETO"));
