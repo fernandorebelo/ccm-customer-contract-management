@@ -166,6 +166,12 @@ public class TelaCadastroProjeto extends JFrame {
 		botaoEditar.setEnabled(false);
 		botaoEditar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
 		panel_1.add(botaoEditar);
+		botaoCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				desativarCampos();
+				limparCampos();
+			}
+		});
 		
 		
 		botaoCancelar.setEnabled(false);
