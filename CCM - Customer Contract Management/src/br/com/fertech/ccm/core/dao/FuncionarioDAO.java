@@ -13,6 +13,36 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioDAO {
 	
+	public String alterarFuncionario(FuncionarioEntity funcionario) throws BusinessException{
+		String sql = "UPDATE FUNCIONARIO SET NOME_FUNCIONARIO=?, CARGO_FUNCIONARIO=?, REGISTRO_FUNCIONARIO=? WHERE ID_FUNCIONARIO=?";
+		PreparedStatement ps = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setString(1, funcionario.getNome());
+			ps.setString(2, funcionario.getCargo());
+			ps.setString(3, funcionario.getRegistroProfissional());
+			ps.setLong(4, funcionario.getCodigoFuncionario());
+			
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao atualizar os dados do funcionário.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return "Funcionário alterado com sucesso";
+	}
+	
 	public FuncionarioEntity buscarFuncionarioPorId(long codigoFuncionario) throws BusinessException{
 		String sql = "SELECT ID_FUNCIONARIO, NOME_FUNCIONARIO, CARGO_FUNCIONARIO, REGISTRO_FUNCIONARIO FROM FUNCIONARIO WHERE ID_FUNCIONARIO = ?";
 		PreparedStatement ps = null;

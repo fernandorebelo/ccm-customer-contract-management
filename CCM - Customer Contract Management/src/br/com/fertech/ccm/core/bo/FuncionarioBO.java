@@ -8,6 +8,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioBO {
 	
+	public String alterarFuncionario(FuncionarioEntity funcionario) throws BusinessException{
+		return new FuncionarioDAO().alterarFuncionario(funcionario);
+	}
+	
 	public FuncionarioEntity buscarFuncionarioPorId(long codigoFuncionario) throws BusinessException{
 		return new FuncionarioDAO().buscarFuncionarioPorId(codigoFuncionario);
 	}

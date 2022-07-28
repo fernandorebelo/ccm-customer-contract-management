@@ -95,18 +95,18 @@ public class PrincipalTeste {
 		
 		
 		
-//		//chamando core/backend para alterar o projeto
-//		ProjetoService ps = new ProjetoService();
-//		ProjetoEntity projeto = new ProjetoEntity();
-//		projeto.setCodigo(1L);
-//		projeto.setTipoProjeto("proj int");
-//		projeto.setAmbiente("sala");
-//		projeto.setArea(32.5);
-//		projeto.setValor(2.990);
+//		//chamando core/backend para alterar o funcionário
+//		FuncionarioService fs = new FuncionarioService();
+//		FuncionarioEntity funcionario = new FuncionarioEntity();
+//		funcionario.setCodigoFuncionario(6L);
+//		funcionario.setNome("Fernando Rebelo");
+//		funcionario.setCargo("Arquiteto poprietário");
+//		funcionario.setRegistroProfissional("CAU 123456");
+//		
 //		
 //		try {
 //			
-//			System.out.println(ps.alterarProjeto(projeto));
+//			System.out.println(fs.alterarFuncionario(funcionario));
 //		} catch (BusinessException e) {
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}
