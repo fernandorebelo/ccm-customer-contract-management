@@ -41,7 +41,17 @@ public class TelaCadastroProjeto extends JFrame {
 	private JTextField textoAmbiente;
 	private JTextField textoArea;
 	private JTextField textoValor;
-	private JTextField textoCodigo;
+	private JTextField textoId;
+	
+	JButton botaoCadastrar = new JButton("Cadastrar");
+	JButton botaoCancelar = new JButton("Cancelar");
+	JButton botaoLimpar = new JButton("Limpar campos");
+	JButton botaoNovo = new JButton("Novo");
+	JButton botaoExcluir = new JButton("Excluir");
+	JButton botaoEditar = new JButton("Editar");
+	JButton botaoSalvar = new JButton("Salvar");
+	
+	
 
 	/**
 	 * Launch the application.
@@ -71,6 +81,8 @@ public class TelaCadastroProjeto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][grow]"));
 		
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
 		contentPane.add(panel, "cell 0 0 3 1,grow");
@@ -88,15 +100,48 @@ public class TelaCadastroProjeto extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, "cell 0 2 2 1,alignx left,growy");
 		
-		JButton btnNewButton = new JButton("Novo");
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
-		panel_1.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Salvar");
-		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
-		panel_1.add(btnNewButton_1);
+		botaoNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ativarCamposNovo();
+			}
+		});
+		botaoNovo.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\adicionar.png"));
+		panel_1.add(botaoNovo);
 		
-		JButton botaoExcluir = new JButton("Excluir");
+		
+		botaoSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int confirmarAlteracao = JOptionPane.showConfirmDialog(null, "Deseja confirmar o alteração?");
+				if(confirmarAlteracao == 0) {
+					ProjetoEntity projetoEntity = new ProjetoEntity();
+					projetoEntity.setCodigo(Long.parseLong(textoId.getText()));
+					projetoEntity.setTipoProjeto(textoTipoProjeto.getText());
+					projetoEntity.setAmbiente(textoAmbiente.getText());
+					projetoEntity.setArea(Double.parseDouble(textoArea.getText()));
+					projetoEntity.setValor(Double.parseDouble(textoValor.getText()));
+					
+					try {
+						ProjetoService ps = new ProjetoService();
+						ps.alterarProjeto(projetoEntity);
+						JOptionPane.showMessageDialog(null, textoTipoProjeto.getText() + " alterado com sucesso.");
+						limparCampos();
+						desativarCampos();
+					} catch (BusinessException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Alteração cancelada.");
+					desativarCampos();
+				}
+			}
+		});
+		botaoSalvar.setEnabled(false);
+		botaoSalvar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\salvar.png"));
+		panel_1.add(botaoSalvar);
+		
+		
+		botaoExcluir.setEnabled(false);
 		botaoExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProjetoEntity projetoSelecionado = projetos.get(table.getSelectedRow());
@@ -117,11 +162,13 @@ public class TelaCadastroProjeto extends JFrame {
 		botaoExcluir.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\sair.png"));
 		panel_1.add(botaoExcluir);
 		
-		JButton btnNewButton_3 = new JButton("Atualizar");
-		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
-		panel_1.add(btnNewButton_3);
 		
-		JButton botaoCancelar = new JButton("Cancelar");
+		botaoEditar.setEnabled(false);
+		botaoEditar.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\atualizar.png"));
+		panel_1.add(botaoEditar);
+		
+		
+		botaoCancelar.setEnabled(false);
 		panel_1.add(botaoCancelar);
 		
 		JButton botaoSair = new JButton("Voltar");
@@ -139,11 +186,11 @@ public class TelaCadastroProjeto extends JFrame {
 		JLabel labelCodigo = new JLabel("C\u00F3digo");
 		contentPane.add(labelCodigo, "cell 0 3,alignx trailing");
 		
-		textoCodigo = new JTextField();
-		textoCodigo.setEnabled(false);
-		textoCodigo.setEditable(false);
-		contentPane.add(textoCodigo, "cell 1 3,growx");
-		textoCodigo.setColumns(10);
+		textoId = new JTextField();
+		textoId.setEnabled(false);
+		textoId.setEditable(false);
+		contentPane.add(textoId, "cell 1 3,growx");
+		textoId.setColumns(10);
 		
 		JLabel labelTipoProjeto = new JLabel("Tipo de projeto");
 		contentPane.add(labelTipoProjeto, "cell 0 4,alignx right");
@@ -175,7 +222,8 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane.add(textoValor, "cell 1 7,growx");
 		textoValor.setColumns(10);
 		
-		JButton botaoCadastrar = new JButton("Cadastrar");
+		
+		botaoCadastrar.setEnabled(false);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirmarCadastro = JOptionPane.showConfirmDialog(null, "Deseja confirmar o cadastro?");
@@ -205,7 +253,8 @@ public class TelaCadastroProjeto extends JFrame {
 		
 		
 		
-		JButton botaoLimpar = new JButton("Limpar campos");
+		
+		botaoLimpar.setEnabled(false);
 		botaoLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparCampos();
@@ -214,6 +263,11 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane.add(botaoLimpar, "cell 2 9,growx");
 		
 		JButton botaoAtualizar = new JButton("Atualizar");
+		botaoAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popularTabela();
+			}
+		});
 		contentPane.add(botaoAtualizar, "cell 2 10,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -273,6 +327,42 @@ public class TelaCadastroProjeto extends JFrame {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Erro ao buscar projetos no banco de dados: " + e.getMensagemDeErro());
 			}
+		}
+		
+		public void ativarCamposNovo() {
+			textoTipoProjeto.setEnabled(true);
+			textoAmbiente.setEnabled(true);
+			textoArea.setEnabled(true);
+			textoValor.setEnabled(true);
+			botaoCancelar.setEnabled(true);
+			botaoCadastrar.setEnabled(true);
+			botaoLimpar.setEnabled(true);
+			textoId.setText("");
+		}
+		
+		public void ativarCamposEditar() {
+			textoTipoProjeto.setEnabled(true);
+			textoAmbiente.setEnabled(true);
+			textoArea.setEnabled(true);
+			textoValor.setEnabled(true);
+			botaoCancelar.setEnabled(true);
+			botaoLimpar.setEnabled(true);
+			botaoNovo.setEnabled(false);
+		}
+		
+		public void desativarCampos() {
+			textoTipoProjeto.setEnabled(true);
+			textoAmbiente.setEnabled(true);
+			textoArea.setEnabled(true);
+			textoValor.setEnabled(true);
+			botaoCancelar.setEnabled(false);
+			botaoCadastrar.setEnabled(false);
+			botaoLimpar.setEnabled(false);
+			botaoExcluir.setEnabled(false);
+			botaoEditar.setEnabled(false);
+			botaoSalvar.setEnabled(false);
+			botaoNovo.setEnabled(true);
+			textoId.setText("");
 		}
 
 }
