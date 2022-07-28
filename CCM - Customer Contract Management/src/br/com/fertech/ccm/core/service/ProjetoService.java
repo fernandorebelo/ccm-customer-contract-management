@@ -8,6 +8,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoService {
 	
+	public String alterarProjeto(ProjetoEntity projeto) throws BusinessException{
+		return new ProjetoBO().alterarProjeto(projeto);
+	}
+	
 	public ProjetoEntity buscarProjetoPorId(long codigoProjeto) throws BusinessException{
 		return new ProjetoBO().buscarProjetoPorId(codigoProjeto);
 	}

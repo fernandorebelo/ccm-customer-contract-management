@@ -12,6 +12,37 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoDAO {
 	
+	public String alterarProjeto(ProjetoEntity projeto) throws BusinessException{
+		String sql = "UPDATE PROJETO SET TIPO_PROJETO = ?, AMB_PROJETO = ?, AREA_PROJETO = ?, VALOR_PROJETO = ? WHERE ID_PROJETO = ?";
+		PreparedStatement ps = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setString(1, projeto.getTipoProjeto());
+			ps.setString(2, projeto.getAmbiente());
+			ps.setDouble(3, projeto.getArea());
+			ps.setDouble(4, projeto.getValor());
+			ps.setLong(5, projeto.getCodigo());
+			
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao atualizar os dados do projeto.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return "Projeto alterado com sucesso";
+	}
+	
 	public ProjetoEntity buscarProjetoPorId(long codigoProjeto) throws BusinessException{
 		String sql = "SELECT ID_PROJETO, TIPO_PROJETO, AMB_PROJETO, AREA_PROJETO, VALOR_PROJETO FROM PROJETO WHERE ID_PROJETO = ?";
 		PreparedStatement ps = null;

@@ -11,6 +11,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoBO {
 	
+	public String alterarProjeto(ProjetoEntity projeto) throws BusinessException{
+		return new ProjetoDAO().alterarProjeto(projeto);
+	}
+	
 	public ProjetoEntity buscarProjetoPorId(long codigoProjeto) throws BusinessException{
 		return new ProjetoDAO().buscarProjetoPorId(codigoProjeto);
 	}
