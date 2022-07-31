@@ -121,6 +121,9 @@ public class TelaInicialSistema extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int opcao = JOptionPane.showConfirmDialog(null, "Deseja encerrar o programa?");
 				if(opcao == 0) {
+					TelaPrincipal tp = new TelaPrincipal();
+					tp.setVisible(true);
+							
 					dispose();
 				}
 			}

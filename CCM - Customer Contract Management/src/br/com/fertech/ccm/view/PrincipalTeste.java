@@ -9,9 +9,11 @@ import br.com.fertech.ccm.core.dao.ClienteDAO;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.entity.ProjetoEntity;
+import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.service.ClienteService;
 import br.com.fertech.ccm.core.service.FuncionarioService;
 import br.com.fertech.ccm.core.service.ProjetoService;
+import br.com.fertech.ccm.core.service.UsuarioService;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class PrincipalTeste {
@@ -120,6 +122,12 @@ public class PrincipalTeste {
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}
 		
+//		UsuarioEntity ue = new UsuarioEntity();
+//		ue.setLogin("teste");
+//		ue.setSenha("teste");
+//		UsuarioService us = new UsuarioService();
+//		System.out.println(us.salvarUsuario(ue));
+//		System.out.println(us.autenticarUsuario(ue));
 		
 
 	}

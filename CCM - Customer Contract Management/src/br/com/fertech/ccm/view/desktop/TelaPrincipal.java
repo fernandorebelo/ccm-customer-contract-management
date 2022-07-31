@@ -16,17 +16,22 @@ import javax.swing.border.EmptyBorder;
 
 import com.mysql.cj.x.protobuf.MysqlxSession.Close;
 
+import br.com.fertech.ccm.core.dao.UsuarioDAO;
+import br.com.fertech.ccm.core.entity.UsuarioEntity;
+import br.com.fertech.ccm.core.service.UsuarioService;
+import br.com.fertech.ccm.core.util.exception.BusinessException;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.plugins.tiff.ExifParentTIFFTagSet;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 public class TelaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textoUsuario;
-	private JTextField textoSenha;
+	private JTextField textoLogin;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -55,7 +60,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][][grow]", "[][][grow][][][][][][grow][][]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][grow][grow]", "[][][grow][][][][][][grow][][]"));
 		
 		JLabel lblNewLabel = new JLabel("CCM");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -72,16 +77,15 @@ public class TelaPrincipal extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Usu\u00E1rio");
 		contentPane.add(lblNewLabel_4, "cell 1 4,alignx trailing");
 		
-		textoUsuario = new JTextField();
-		contentPane.add(textoUsuario, "cell 2 4,growx");
-		textoUsuario.setColumns(10);
+		textoLogin = new JTextField();
+		contentPane.add(textoLogin, "cell 2 4,growx");
+		textoLogin.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Senha");
 		contentPane.add(lblNewLabel_5, "cell 1 5,alignx trailing");
 		
-		textoSenha = new JTextField();
-		contentPane.add(textoSenha, "cell 2 5,growx");
-		textoSenha.setColumns(10);
+		passwordField = new JPasswordField();
+		contentPane.add(passwordField, "cell 2 5,growx");
 		
 		JLabel lblNewLabel_6 = new JLabel("Esqueci a senha");
 		contentPane.add(lblNewLabel_6, "cell 2 6,alignx right");
@@ -89,8 +93,21 @@ public class TelaPrincipal extends JFrame {
 		JButton botaoLogin = new JButton("Login");
 		botaoLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicialSistema tis = new TelaInicialSistema();
-				tis.setVisible(true);
+				UsuarioService us = new UsuarioService();
+				String strLogin = textoLogin.getText();
+				String strSenha = new String(passwordField.getPassword());
+				
+				try {
+					if(us.autenticarUsuario(strLogin, strSenha)) {
+						TelaInicialSistema tela = new TelaInicialSistema();
+						tela.setVisible(true);
+						dispose();
+					}else {
+						JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos.");
+					}
+				} catch (BusinessException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		contentPane.add(botaoLogin, "cell 2 7,growx");
