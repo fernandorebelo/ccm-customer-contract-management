@@ -195,6 +195,8 @@ public class TelaCadastroProjeto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int opcao = JOptionPane.showConfirmDialog(null, "Deseja voltar para a tela inicial?");
 				if(opcao == 0) {
+					TelaInicialSistema tis = new TelaInicialSistema();
+					tis.setVisible(true);
 					dispose();
 				}
 			}

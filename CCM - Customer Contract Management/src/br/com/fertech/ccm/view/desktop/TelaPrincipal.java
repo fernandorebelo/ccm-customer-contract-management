@@ -74,7 +74,7 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(lblNewLabel_3, "cell 2 3,alignx center");
 		
-		JLabel lblNewLabel_4 = new JLabel("Usu\u00E1rio");
+		JLabel lblNewLabel_4 = new JLabel("Login");
 		contentPane.add(lblNewLabel_4, "cell 1 4,alignx trailing");
 		
 		textoLogin = new JTextField();
@@ -111,6 +111,9 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		contentPane.add(botaoLogin, "cell 2 7,growx");
+		
+		JLabel lblNewLabel_2 = new JLabel("<html>\r\n<p>Dados para login</p>\r\n<p>Login: admin</p>\r\n<p>Senha: admin</p>");
+		contentPane.add(lblNewLabel_2, "cell 3 8,alignx left");
 	}
 
 }

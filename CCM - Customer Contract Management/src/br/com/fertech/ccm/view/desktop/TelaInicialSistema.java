@@ -49,7 +49,7 @@ public class TelaInicialSistema extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[100px:n][][100px:n][grow]", "[][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[100px:n][][100px:n][grow]", "[][][][][][][]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -60,12 +60,6 @@ public class TelaInicialSistema extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Nome da Empresa");
 		panel.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_3 = new JLabel(" | ");
-		panel.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_2 = new JLabel("CCM - Customer Contract Management");
-		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\Usuario\\git\\ccm-customer-contract-management\\CCM - Customer Contract Management\\assets\\prancheta.png"));
@@ -88,6 +82,7 @@ public class TelaInicialSistema extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastroCliente tcc = new TelaCadastroCliente();
 				tcc.setVisible(true);
+				dispose();
 			}
 		});
 		botaoClientes.setIcon(null);
@@ -101,6 +96,7 @@ public class TelaInicialSistema extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastroProjeto tcp = new TelaCadastroProjeto();
 				tcp.setVisible(true);
+				dispose();
 			}
 		});
 		botaoProjetos.setIcon(null);
@@ -111,6 +107,7 @@ public class TelaInicialSistema extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				TelaCadastroFuncionario tcf = new TelaCadastroFuncionario();
 				tcf.setVisible(true);
+				dispose();
 			}
 		});
 		botaoFuncionarios.setIcon(null);
@@ -129,6 +126,16 @@ public class TelaInicialSistema extends JFrame {
 			}
 		});
 		contentPane.add(botaoFechar, "cell 3 5,alignx right");
+		
+		JButton botaoCadastrarUsuario = new JButton("<html>\r\n<p text-align: center>Cadastrar novo login</p>\r\n<p text-align: center>para acesso ao sistema</p>\r\n");
+		botaoCadastrarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroLogin tcl = new TelaCadastroLogin();
+				tcl.setVisible(true);
+				dispose();
+			}
+		});
+		contentPane.add(botaoCadastrarUsuario, "cell 3 6,alignx right");
 		
 		
 	}
