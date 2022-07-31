@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 
 import br.com.fertech.ccm.core.dao.ClienteDAO;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
-import br.com.fertech.ccm.core.entity.EscritorioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteBO {
