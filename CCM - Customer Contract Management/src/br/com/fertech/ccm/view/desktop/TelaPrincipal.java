@@ -16,10 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.mysql.cj.x.protobuf.MysqlxSession.Close;
 
-import br.com.fertech.ccm.core.dao.UsuarioDAO;
 import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.service.FuncionarioService;
-import br.com.fertech.ccm.core.service.UsuarioService;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 import net.miginfocom.swing.MigLayout;
 

@@ -3,7 +3,6 @@ package br.com.fertech.ccm.core.bo;
 import java.util.List;
 
 import br.com.fertech.ccm.core.dao.FuncionarioDAO;
-import br.com.fertech.ccm.core.dao.UsuarioDAO;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;

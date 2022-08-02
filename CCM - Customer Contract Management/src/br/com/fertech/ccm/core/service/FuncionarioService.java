@@ -3,7 +3,6 @@ package br.com.fertech.ccm.core.service;
 import java.util.List;
 
 import br.com.fertech.ccm.core.bo.FuncionarioBO;
-import br.com.fertech.ccm.core.bo.UsuarioBO;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
 import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
