@@ -3,7 +3,9 @@ package br.com.fertech.ccm.core.service;
 import java.util.List;
 
 import br.com.fertech.ccm.core.bo.FuncionarioBO;
+import br.com.fertech.ccm.core.bo.UsuarioBO;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
+import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioService {
@@ -28,5 +30,17 @@ public class FuncionarioService {
 		System.out.println("Funcionário - Entrando no backend... \nFuncionário - Camada service...");
 		FuncionarioBO fbo = new FuncionarioBO();
 		return fbo.salvarFuncionario(funcionario);
+	}
+	
+	
+	
+	// MÉTODOS LOGIN FUNCIONARIO - AUTENTICAR E SALVAR
+	
+	public boolean autenticarLoginFuncionario(String login, String senha) throws BusinessException{
+		return new FuncionarioBO().autenticarLoginFuncionario(login, senha);
+	}
+
+	public String salvarLoginFuncionario(FuncionarioEntity funcionario) throws BusinessException{
+		return new FuncionarioBO().salvarLoginFuncionario(funcionario);
 	}
 }

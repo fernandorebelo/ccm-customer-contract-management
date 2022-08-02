@@ -3,7 +3,9 @@ package br.com.fertech.ccm.core.bo;
 import java.util.List;
 
 import br.com.fertech.ccm.core.dao.FuncionarioDAO;
+import br.com.fertech.ccm.core.dao.UsuarioDAO;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
+import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioBO {
@@ -45,5 +47,26 @@ public class FuncionarioBO {
 		
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		return fdao.salvarFuncionario(funcionario);
+	}
+	
+	
+	
+	// MÉTODOS LOGIN FUNCIONARIO - AUTENTICAR E SALVAR
+	public boolean autenticarLoginFuncionario(String login, String senha) throws BusinessException{
+		return new FuncionarioDAO().autenticarLoginFuncionario(login, senha);
+	}
+	
+	public String salvarLoginFuncionario(FuncionarioEntity funcionario) throws BusinessException{
+		
+		//TODO autenticar senha
+		if(funcionario.getLogin() != null && funcionario.getLogin().equals("")) {
+			throw new BusinessException("Login precisa ser preenchido.");
+		}
+		//TODO autenticar login
+		if(funcionario.getSenha() != null && funcionario.getSenha().equals("")) {
+			throw new BusinessException("Senha precisa ser preenchida.");
+		}
+		
+		return new FuncionarioDAO().salvarLoginFuncionario(funcionario);
 	}
 }

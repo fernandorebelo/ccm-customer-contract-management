@@ -5,9 +5,10 @@ import java.util.List;
 import br.com.fertech.ccm.core.bo.ClienteBO;
 import br.com.fertech.ccm.core.dao.ClienteDAO;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
+import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
-public class ClienteService {
+public class ClienteService extends UsuarioEntity{
 	
 	public String alterarCliente(ClienteEntity cliente) throws BusinessException{
 		return new ClienteBO().alterarCliente(cliente);

@@ -2,7 +2,7 @@ package br.com.fertech.ccm.core.entity;
 
 import java.util.Objects;
 
-public class ContratoEntity {
+public class ContratoEntity extends UsuarioEntity{
 
 	private long codigoContrato;
 	private ClienteEntity cliente;

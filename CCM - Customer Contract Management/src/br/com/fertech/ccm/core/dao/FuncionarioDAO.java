@@ -9,6 +9,7 @@ import java.util.List;
 import br.com.fertech.ccm.core.dao.connection.ConnectionMySQL;
 import br.com.fertech.ccm.core.entity.ClienteEntity;
 import br.com.fertech.ccm.core.entity.FuncionarioEntity;
+import br.com.fertech.ccm.core.entity.UsuarioEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioDAO {
@@ -180,4 +181,66 @@ public class FuncionarioDAO {
 		
 		return "Funcionário cadastrado.";
 	}
+	
+	// MÉTODOS PARA LOGIN - AUTENTICAR E SALVAR
+	public boolean autenticarLoginFuncionario(String login, String senha) throws BusinessException{
+		String sql = "SELECT ID_CADASTRO, LOGIN_CADASTRO, SENHA_CADASTRO FROM CADASTRO WHERE LOGIN_CADASTRO=?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		boolean autenticar = false;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setString(1, login);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				if(rs.getString("LOGIN_CADASTRO").equals(login)) {
+					autenticar = false;
+				}
+				autenticar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			autenticar = false;
+		} finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return autenticar;
+	}
+
+	public String salvarLoginFuncionario(FuncionarioEntity funcionario) throws BusinessException{
+		String sql = "INSERT INTO CADASTRO (LOGIN_CADASTRO, SENHA_CADASTRO) VALUES (?,?)";
+		PreparedStatement ps = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			ps.setString(1, funcionario.getLogin());
+			ps.setString(2, String.valueOf(funcionario.getSenha()));
+			
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao criar usuário.");
+		} finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return "Usuário criado com sucesso";
+	}
+	
 }

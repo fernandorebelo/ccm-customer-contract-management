@@ -2,7 +2,7 @@ package br.com.fertech.ccm.core.entity;
 
 import java.util.Objects;
 
-public class FuncionarioEntity {
+public class FuncionarioEntity  extends UsuarioEntity{
 
 	private long codigoFuncionario;
 	private String nome;
