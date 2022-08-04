@@ -62,6 +62,9 @@ public class TelaCadastroCliente extends JFrame {
 	JButton botaoSalvar = new JButton("Salvar");
 	JButton botaoCancelar = new JButton("Cancelar");
 	JButton botaoNovo = new JButton("Novo");
+	private JTextField textoFiltroCodigo;
+	private JTextField textoFiltroNome;
+	private JTextField textoFiltroEmail;
 	
 
 	/**
@@ -90,7 +93,7 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][][grow]", "[][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][][][][][][grow]"));
 		
 		
 		botaoEditar.addActionListener(new ActionListener() {
@@ -317,10 +320,55 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		contentPane.add(botaoLimpar, "flowx,cell 2 10,growx");
+		
+		JLabel lblNewLabel_2 = new JLabel("Pesquisar por filtro");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		contentPane.add(lblNewLabel_2, "cell 0 11 2 1,alignx left");
 		contentPane.add(botaoAtualizarTabela, "cell 2 11,growx");
 		
+		JLabel lblNewLabel_3 = new JLabel("C\u00F3digo");
+		contentPane.add(lblNewLabel_3, "cell 0 12,alignx trailing");
+		
+		textoFiltroCodigo = new JTextField();
+		contentPane.add(textoFiltroCodigo, "cell 1 12,growx");
+		textoFiltroCodigo.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Nome");
+		contentPane.add(lblNewLabel_4, "cell 0 13,alignx trailing");
+		
+		textoFiltroNome = new JTextField();
+		contentPane.add(textoFiltroNome, "cell 1 13,growx");
+		textoFiltroNome.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Pesquisar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteEntity clienteFiltro = new ClienteEntity();
+				clienteFiltro.setNome(textoFiltroNome.getText());
+				clienteFiltro.setEmail(textoFiltroEmail.getText());
+				
+				try {
+					if(!textoFiltroCodigo.getText().equals("")) {
+						clienteFiltro.setCodigoCliente(Long.parseLong(textoFiltroCodigo.getText()));
+					}
+				}catch(Exception e1){
+					JOptionPane.showMessageDialog(null, "Valor no código precisa ser numérico.");
+				}
+				popularTabelaFiltrada(clienteFiltro);
+			}
+		});
+		
+		JLabel lblNewLabel_5 = new JLabel("E-mail");
+		contentPane.add(lblNewLabel_5, "cell 0 14,alignx trailing");
+		
+		textoFiltroEmail = new JTextField();
+		textoFiltroEmail.setText("");
+		contentPane.add(textoFiltroEmail, "cell 1 14,growx");
+		textoFiltroEmail.setColumns(10);
+		contentPane.add(btnNewButton, "cell 1 15");
+		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 13 4 1,grow");
+		contentPane.add(scrollPane, "cell 0 17 4 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -380,6 +428,26 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		}
 		
+		private void popularTabelaFiltrada(ClienteEntity clienteFiltrado) {
+			try {
+				clientes = new ClienteService().buscarClienteFiltrado(clienteFiltrado);
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.getDataVector().removeAllElements(); //para não repetir a tabela em algum momento
+				
+				for (ClienteEntity clienteEntity : clientes) {
+					model.addRow(new Object[] {clienteEntity.getCodigoCliente(),
+												clienteEntity.getNome(),
+												clienteEntity.getCpf(),
+												clienteEntity.getEndereco(),
+												clienteEntity.getTelefone(),
+												clienteEntity.getEmail()
+							});
+				}
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Erro ao buscar clientes no banco de dados: " + e.getMensagemDeErro());
+			}
+		}
 
 		public void carregarClientePorId(long codigoCliente) {
 			try {
