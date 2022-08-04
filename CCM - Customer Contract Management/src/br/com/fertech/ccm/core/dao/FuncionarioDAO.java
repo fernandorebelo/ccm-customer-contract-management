@@ -199,6 +199,9 @@ public class FuncionarioDAO {
 				if(rs.getString("LOGIN_CADASTRO").equals(login)) {
 					autenticar = false;
 				}
+				FuncionarioEntity fe = new FuncionarioEntity();
+				fe.setLogin(rs.getString("LOGIN_CADASTRO"));
+				fe.setSenha(rs.getString("SENHA_CADASTRO"));
 				autenticar = true;
 			}
 			

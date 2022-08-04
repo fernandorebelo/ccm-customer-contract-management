@@ -121,27 +121,33 @@ public class PrincipalTeste {
 //			JOptionPane.showMessageDialog(null, e.getMensagemDeErro());
 //		}
 		
-//		UsuarioEntity ue = new UsuarioEntity();
-//		ue.setLogin("teste");
-//		ue.setSenha("teste");
-//		UsuarioService us = new UsuarioService();
-//		System.out.println(us.salvarUsuario(ue));
-//		System.out.println(us.autenticarUsuario(ue));
+		FuncionarioEntity fe = new FuncionarioEntity();
+		fe.setLogin("teste");
+		fe.setSenha("teste");
+		FuncionarioService fs = new FuncionarioService();
+		fs.salvarLoginFuncionario(fe);
+		if(fs.autenticarLoginFuncionario(fe.getLogin(), fe.getSenha())) {
+			System.out.println("Deu boa.");
+		}else {
+			System.out.println("Deu ruim.");
+		}
 		
-		ClienteEntity ce = new ClienteEntity();
-		ce.setNome("m");
+//		ClienteEntity ce = new ClienteEntity();
+//		ce.setNome("m");
 //		ce.setCpf("444");
 //		ce.setEmail("email@email.com");
+//		
+//		try {
+//			List<ClienteEntity> resultado = new ClienteService().buscarClienteFiltrado(ce);
+//			for (ClienteEntity clienteEntity : resultado) {
+//				System.out.println("nome: " + clienteEntity.getNome());
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
-		try {
-			List<ClienteEntity> resultado = new ClienteService().buscarClienteFiltrado(ce);
-			for (ClienteEntity clienteEntity : resultado) {
-				System.out.println("nome: " + clienteEntity.getNome());
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 
 	}
 
