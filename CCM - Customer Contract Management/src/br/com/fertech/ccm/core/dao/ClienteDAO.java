@@ -16,6 +16,138 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteDAO {
 	
+	//FILTRAR DE FORMA DINÂMICA
+	public List<ClienteEntity> buscarClienteFiltrado(ClienteEntity cliente) throws BusinessException{
+		String sql = "SELECT ID_CLIENTE, NM_CLIENTE, CPF_CLIENTE, END_CLIENTE, TEL_CLIENTE, EMAIL_CLIENTE FROM CLIENTE";
+		
+		boolean adicionaWhere = true;
+		
+		List<ClienteEntity> resultado = new ArrayList<ClienteEntity>();
+		
+		//sql dinâmico
+		if(cliente != null) {
+			if(cliente.getCodigoCliente() != null) {
+				sql += " WHERE ";
+				sql += " ID_CLIENTE = ? ";
+				adicionaWhere = false;
+			}
+			if(cliente.getNome() != null && !cliente.getNome().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " NM_CLIENTE LIKE ?";
+			}
+			if(cliente.getCpf() != null && !cliente.getCpf().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " CPF_CLIENTE LIKE ?";
+			}
+			if(cliente.getEndereco() != null && !cliente.getEndereco().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " END_CLIENTE LIKE ?";
+			}
+			if(cliente.getTelefone() != null && !cliente.getTelefone().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " TEL_CLIENTE LIKE ?";
+			}
+			if(cliente.getEmail() != null && !cliente.getEmail().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " EMAIL_CLIENTE LIKE ?";
+			}
+		}
+//		System.out.println(sql);
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			
+			//setar os valores no SQL de acordo com o índice
+			int indice = 0;
+			if(cliente != null) {
+				if(cliente.getCodigoCliente() != null) {
+					indice += 1;
+					ps.setLong(indice, cliente.getCodigoCliente());
+				}
+				if(cliente.getNome() != null && !cliente.getNome().equals("")) {
+					indice += 1;
+					ps.setString(indice, cliente.getNome());
+				}
+				if(cliente.getCpf() != null && !cliente.getCpf().equals("")) {
+					indice += 1;
+					ps.setString(indice, cliente.getCpf());
+				}
+				if(cliente.getEndereco() != null && !cliente.getEndereco().equals("")) {
+					indice += 1;
+					ps.setString(indice, cliente.getEndereco());
+				}
+				if(cliente.getTelefone() != null && !cliente.getTelefone().equals("")) {
+					indice += 1;
+					ps.setString(indice, cliente.getTelefone());
+				}
+				if(cliente.getEmail() != null && !cliente.getEmail().equals("")) {
+					indice += 1;
+					ps.setString(indice, cliente.getEmail());
+				}
+			}
+			
+			rs = ps.executeQuery();
+			
+			//setar valores na entidade
+			while(rs.next()) {
+				ClienteEntity clienteResultado = new ClienteEntity();
+				clienteResultado.setCodigoCliente(rs.getLong("ID_CLIENTE"));
+				clienteResultado.setNome(rs.getString("NM_CLIENTE"));
+				clienteResultado.setCpf(rs.getString("CPF_CLIENTE"));
+				clienteResultado.setEndereco(rs.getString("END_CLIENTE"));
+				clienteResultado.setTelefone(rs.getString("TEL_CLIENTE"));
+				clienteResultado.setEmail(rs.getString("EMAIL_CLIENTE"));
+				resultado.add(clienteResultado);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao filtrar os dados do cliente.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return resultado;
+	}
+	
+	//CRUD
 	public String alterarCliente(ClienteEntity cliente) throws BusinessException{
 		String sql = "UPDATE CLIENTE SET NM_CLIENTE = ?, CPF_CLIENTE = ?, END_CLIENTE = ?, TEL_CLIENTE = ?, EMAIL_CLIENTE = ? WHERE ID_CLIENTE = ?";
 		

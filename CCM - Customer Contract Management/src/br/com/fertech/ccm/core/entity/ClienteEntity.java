@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class ClienteEntity extends UsuarioEntity{
 
-	private long codigoCliente;
+	private Long codigoCliente;
 	private String nome;
 	private String cpf;
 	private String endereco;
@@ -17,10 +17,10 @@ public class ClienteEntity extends UsuarioEntity{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getCodigoCliente() {
+	public Long getCodigoCliente() {
 		return codigoCliente;
 	}
-	public void setCodigoCliente(long codigoCliente) {
+	public void setCodigoCliente(Long codigoCliente) {
 		this.codigoCliente = codigoCliente;
 	}
 	public String getNome() {

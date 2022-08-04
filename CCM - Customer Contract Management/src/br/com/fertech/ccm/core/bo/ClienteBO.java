@@ -12,6 +12,10 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ClienteBO {
 	
+	public List<ClienteEntity> buscarClienteFiltrado(ClienteEntity cliente) throws BusinessException{
+		return new ClienteDAO().buscarClienteFiltrado(cliente);
+	}
+	
 	public String alterarCliente(ClienteEntity cliente) throws BusinessException{
 		validarCliente(cliente);
 		return new ClienteDAO().alterarCliente(cliente);

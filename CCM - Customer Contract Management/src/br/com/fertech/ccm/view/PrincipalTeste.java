@@ -128,6 +128,12 @@ public class PrincipalTeste {
 //		System.out.println(us.salvarUsuario(ue));
 //		System.out.println(us.autenticarUsuario(ue));
 		
+		ClienteEntity ce = new ClienteEntity();
+		ce.setNome("teste");
+		ce.setCpf("444");
+		ce.setEmail("email@email.com");
+		
+		new ClienteService().buscarClienteFiltrado(ce);
 
 	}
 
