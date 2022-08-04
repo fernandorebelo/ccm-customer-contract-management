@@ -77,7 +77,7 @@ public class ClienteDAO {
 				sql += " EMAIL_CLIENTE LIKE ?";
 			}
 		}
-//		System.out.println(sql);
+		System.out.println(sql);
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -94,23 +94,23 @@ public class ClienteDAO {
 				}
 				if(cliente.getNome() != null && !cliente.getNome().equals("")) {
 					indice += 1;
-					ps.setString(indice, cliente.getNome());
+					ps.setString(indice, cliente.getNome()+"%");
 				}
 				if(cliente.getCpf() != null && !cliente.getCpf().equals("")) {
 					indice += 1;
-					ps.setString(indice, cliente.getCpf());
+					ps.setString(indice, cliente.getCpf()+"%");
 				}
 				if(cliente.getEndereco() != null && !cliente.getEndereco().equals("")) {
 					indice += 1;
-					ps.setString(indice, cliente.getEndereco());
+					ps.setString(indice, cliente.getEndereco()+"%");
 				}
 				if(cliente.getTelefone() != null && !cliente.getTelefone().equals("")) {
 					indice += 1;
-					ps.setString(indice, cliente.getTelefone());
+					ps.setString(indice, cliente.getTelefone()+"%");
 				}
 				if(cliente.getEmail() != null && !cliente.getEmail().equals("")) {
 					indice += 1;
-					ps.setString(indice, cliente.getEmail());
+					ps.setString(indice, cliente.getEmail()+"%");
 				}
 			}
 			

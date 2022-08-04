@@ -129,11 +129,19 @@ public class PrincipalTeste {
 //		System.out.println(us.autenticarUsuario(ue));
 		
 		ClienteEntity ce = new ClienteEntity();
-		ce.setNome("teste");
-		ce.setCpf("444");
-		ce.setEmail("email@email.com");
+		ce.setNome("m");
+//		ce.setCpf("444");
+//		ce.setEmail("email@email.com");
 		
-		new ClienteService().buscarClienteFiltrado(ce);
+		try {
+			List<ClienteEntity> resultado = new ClienteService().buscarClienteFiltrado(ce);
+			for (ClienteEntity clienteEntity : resultado) {
+				System.out.println("nome: " + clienteEntity.getNome());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
