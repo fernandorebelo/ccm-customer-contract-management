@@ -3,10 +3,15 @@ package br.com.fertech.ccm.core.service;
 import java.util.List;
 
 import br.com.fertech.ccm.core.bo.ProjetoBO;
+import br.com.fertech.ccm.core.dao.ProjetoDAO;
 import br.com.fertech.ccm.core.entity.ProjetoEntity;
 import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoService {
+	
+	public List<ProjetoEntity> buscarProjetoFiltrado(ProjetoEntity projeto) throws BusinessException{
+		return new ProjetoBO().buscarProjetoFiltrado(projeto);
+	}
 	
 	public String alterarProjeto(ProjetoEntity projeto) throws BusinessException{
 		return new ProjetoBO().alterarProjeto(projeto);

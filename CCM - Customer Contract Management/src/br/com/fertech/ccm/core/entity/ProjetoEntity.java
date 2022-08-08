@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class ProjetoEntity {
 
-	private long codigoProjeto;
+	private Long codigoProjeto;
 	private String tipoProjeto;
 	private String ambiente;
 	private Double area;
@@ -12,10 +12,10 @@ public class ProjetoEntity {
 	private ClienteEntity cliente;
 	private FuncionarioEntity funcionario;
 	
-	public long getCodigo() {
+	public Long getCodigo() {
 		return codigoProjeto;
 	}
-	public void setCodigo(long codigoProjeto) {
+	public void setCodigo(Long codigoProjeto) {
 		this.codigoProjeto = codigoProjeto;
 	}
 	public String getTipoProjeto() {
@@ -30,16 +30,16 @@ public class ProjetoEntity {
 	public void setAmbiente(String ambiente) {
 		this.ambiente = ambiente;
 	}
-	public double getArea() {
+	public Double getArea() {
 		return area;
 	}
-	public void setArea(double area) {
+	public void setArea(Double area) {
 		this.area = area;
 	}
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 	public ClienteEntity getCliente() {

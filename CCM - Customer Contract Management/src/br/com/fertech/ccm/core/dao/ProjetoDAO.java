@@ -12,6 +12,118 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class ProjetoDAO {
 	
+	//Filtrar de forma dinâmica
+	public List<ProjetoEntity> buscarProjetoFiltrado(ProjetoEntity projeto) throws BusinessException{
+		String sql = "SELECT ID_PROJETO, TIPO_PROJETO, AMB_PROJETO, AREA_PROJETO, VALOR_PROJETO FROM PROJETO";
+		
+		boolean adicionaWhere = true;
+
+		List<ProjetoEntity> resultado = new ArrayList<ProjetoEntity>();
+		
+		if(projeto != null) {
+			if(projeto.getCodigo() != null) {
+				sql += " WHERE ";
+				sql += " ID_PROJETO = ? ";
+				adicionaWhere = false;
+			}
+			if(projeto.getTipoProjeto() != null && !projeto.getTipoProjeto().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " TIPO_PROJETO LIKE ?";
+			}
+			if(projeto.getAmbiente() != null && !projeto.getAmbiente().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " AMB_PROJETO LIKE ?";
+			}
+			if(projeto.getArea() != null && !projeto.getArea().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " AREA_PROJETO LIKE ?";
+			}
+			if(projeto.getValor() != null && !projeto.getValor().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " VALOR_PROJETO LIKE ?";
+			}
+		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+			
+			int indice = 0;
+			if(projeto != null) {
+				if(projeto.getCodigo() != null) {
+					indice += 1;
+					ps.setLong(indice, projeto.getCodigo());
+				}
+				if(projeto.getTipoProjeto() != null && !projeto.getTipoProjeto().equals("")) {
+					indice += 1;
+					ps.setString(indice, "%"+projeto.getTipoProjeto()+"%");
+				}
+				if(projeto.getAmbiente() != null && !projeto.getAmbiente().equals("")) {
+					indice += 1;
+					ps.setString(indice, "%"+projeto.getAmbiente()+"%");
+				}
+				if(projeto.getArea() != null && !projeto.getArea().equals("")) {
+					indice += 1;
+					ps.setString(indice, "%"+projeto.getArea()+"%");
+				}
+				if(projeto.getValor() != null && !projeto.getValor().equals("")) {
+					indice += 1;
+					ps.setString(indice, "%"+projeto.getValor()+"%");
+				}
+			}
+			
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				ProjetoEntity projetoResultado = new ProjetoEntity();
+				projetoResultado.setCodigo(rs.getLong("ID_PROJETO"));
+				projetoResultado.setTipoProjeto(rs.getString("TIPO_PROJETO"));
+				projetoResultado.setAmbiente(rs.getString("AMB_PROJETO"));
+				projetoResultado.setArea(rs.getDouble("AREA_PROJETO"));
+				projetoResultado.setValor(rs.getDouble("VALOR_PROJETO"));
+				resultado.add(projetoResultado);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Erro ao filtrar os dados do cliente.");
+		} finally {
+			if(ps != null) {
+				try {
+					//fechar prepared statement
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return resultado;
+	}
+	
+	//CRUD
 	public String alterarProjeto(ProjetoEntity projeto) throws BusinessException{
 		String sql = "UPDATE PROJETO SET TIPO_PROJETO = ?, AMB_PROJETO = ?, AREA_PROJETO = ?, VALOR_PROJETO = ? WHERE ID_PROJETO = ?";
 		PreparedStatement ps = null;
