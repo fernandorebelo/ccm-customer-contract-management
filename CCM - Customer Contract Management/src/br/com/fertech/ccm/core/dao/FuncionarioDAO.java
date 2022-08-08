@@ -14,6 +14,105 @@ import br.com.fertech.ccm.core.util.exception.BusinessException;
 
 public class FuncionarioDAO {
 	
+	//Filtrar de forma dinâmica
+	public List<FuncionarioEntity> buscarFuncionarioFiltrado(FuncionarioEntity funcionario) throws BusinessException{
+		String sql = "SELECT ID_FUNCIONARIO, NOME_FUNCIONARIO, CARGO_FUNCIONARIO, REGISTRO_FUNCIONARIO FROM FUNCIONARIO";
+		
+		boolean adicionaWhere = true;
+		
+		List<FuncionarioEntity> resultado = new ArrayList<FuncionarioEntity>();
+		
+		if(funcionario != null) {
+			if(funcionario.getCodigoFuncionario() != null) {
+				sql += " WHERE ";
+				sql += " ID_FUNCIONARIO = ? ";
+				adicionaWhere = false;
+			}
+			if(funcionario.getNome() != null && !funcionario.getNome().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " NOME_FUNCIONARIO LIKE ?";
+			}
+			if(funcionario.getCargo() != null && !funcionario.getCargo().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " NOME_FUNCIONARIO LIKE ?";
+			}
+			if(funcionario.getRegistroProfissional() != null && !funcionario.getRegistroProfissional().equals("")) {
+				if(adicionaWhere) {
+					sql += " WHERE ";
+					adicionaWhere = false;
+				}else {
+					sql += " AND ";
+				}
+				sql += " REGISTRO_FUNCIONARIO LIKE ?";
+			}
+			
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			
+			try {
+				ps = ConnectionMySQL.getConnection().prepareStatement(sql);
+				
+				int indice = 0;
+				if(funcionario != null) {
+					if(funcionario.getCodigoFuncionario() != null) {
+						indice += 1;
+						ps.setLong(indice, funcionario.getCodigoFuncionario());
+					}
+					if(funcionario.getNome() != null && !funcionario.getNome().equals("")) {
+						indice += 1;
+						ps.setString(indice, "%"+funcionario.getNome()+"%");
+					}
+					if(funcionario.getCargo() != null && !funcionario.getCargo().equals("")) {
+						indice += 1;
+						ps.setString(indice, "%"+funcionario.getCargo()+"%");
+					}
+					if(funcionario.getRegistroProfissional() != null && !funcionario.getRegistroProfissional().equals("")) {
+						indice += 1;
+						ps.setString(indice, "%"+funcionario.getRegistroProfissional()+"%");
+					}
+					
+					rs = ps.executeQuery();
+					
+					while(rs.next()) {
+						FuncionarioEntity funcionarioResultado = new FuncionarioEntity();
+						funcionarioResultado.setCodigoFuncionario(rs.getLong("ID_FUNCIONARIO"));
+						funcionarioResultado.setNome(rs.getString("NOME_FUNCIONARIO"));
+						funcionarioResultado.setCargo(rs.getString("CARGO_FUNCIONARIO"));
+						funcionarioResultado.setRegistroProfissional(rs.getString("REGISTRO_FUNCIONARIO"));
+						resultado.add(funcionarioResultado);
+					}
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new BusinessException("Erro ao filtrar os dados do funcionário.");
+			} finally {
+				if(ps != null) {
+					try {
+						//fechar prepared statement
+						ps.close();
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}
+		return resultado;
+	}
+	
+	//CRUD
 	public String alterarFuncionario(FuncionarioEntity funcionario) throws BusinessException{
 		String sql = "UPDATE FUNCIONARIO SET NOME_FUNCIONARIO=?, CARGO_FUNCIONARIO=?, REGISTRO_FUNCIONARIO=? WHERE ID_FUNCIONARIO=?";
 		PreparedStatement ps = null;
@@ -123,7 +222,7 @@ public class FuncionarioDAO {
 			
 			while(rs.next()) {
 				FuncionarioEntity funcionario = new FuncionarioEntity();
-				funcionario.setCodigoFuncionario(rs.getInt("ID_FUNCIONARIO"));
+				funcionario.setCodigoFuncionario(rs.getLong("ID_FUNCIONARIO"));
 				funcionario.setNome(rs.getString("NOME_FUNCIONARIO"));
 				funcionario.setCargo(rs.getString("CARGO_FUNCIONARIO"));
 				funcionario.setRegistroProfissional(rs.getString("REGISTRO_FUNCIONARIO"));
@@ -199,9 +298,6 @@ public class FuncionarioDAO {
 				if(rs.getString("LOGIN_CADASTRO").equals(login)) {
 					autenticar = false;
 				}
-				FuncionarioEntity fe = new FuncionarioEntity();
-				fe.setLogin(rs.getString("LOGIN_CADASTRO"));
-				fe.setSenha(rs.getString("SENHA_CADASTRO"));
 				autenticar = true;
 			}
 			

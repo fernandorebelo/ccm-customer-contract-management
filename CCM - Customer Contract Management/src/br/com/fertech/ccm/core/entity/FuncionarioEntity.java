@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class FuncionarioEntity  extends UsuarioEntity{
 
-	private long codigoFuncionario;
+	private Long codigoFuncionario;
 	private String nome;
 	private String cargo;
 	private String registroProfissional;
 	
-	public long getCodigoFuncionario() {
+	public Long getCodigoFuncionario() {
 		return codigoFuncionario;
 	}
-	public void setCodigoFuncionario(long codigoFuncionario) {
+	public void setCodigoFuncionario(Long codigoFuncionario) {
 		this.codigoFuncionario = codigoFuncionario;
 	}
 	public String getRegistroProfissional() {

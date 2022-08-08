@@ -4,7 +4,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		TelaPrincipal tp = new TelaPrincipal();
+		TelaLogin tp = new TelaLogin();
 		tp.setVisible(true);
 	}
 

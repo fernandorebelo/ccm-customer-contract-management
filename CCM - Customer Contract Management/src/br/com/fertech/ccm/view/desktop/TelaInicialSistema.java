@@ -26,18 +26,18 @@ public class TelaInicialSistema extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaInicialSistema frame = new TelaInicialSistema();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					TelaInicialSistema frame = new TelaInicialSistema();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -118,7 +118,7 @@ public class TelaInicialSistema extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int opcao = JOptionPane.showConfirmDialog(null, "Deseja encerrar o programa?");
 				if(opcao == 0) {
-					TelaPrincipal tp = new TelaPrincipal();
+					TelaLogin tp = new TelaLogin();
 					tp.setVisible(true);
 							
 					dispose();
