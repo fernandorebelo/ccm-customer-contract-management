@@ -340,8 +340,8 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(textoFiltroNome, "cell 1 13,growx");
 		textoFiltroNome.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Pesquisar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton botaoPesquisar = new JButton("Pesquisar");
+		botaoPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClienteEntity clienteFiltro = new ClienteEntity();
 				clienteFiltro.setNome(textoFiltroNome.getText());
@@ -365,7 +365,7 @@ public class TelaCadastroCliente extends JFrame {
 		textoFiltroEmail.setText("");
 		contentPane.add(textoFiltroEmail, "cell 1 14,growx");
 		textoFiltroEmail.setColumns(10);
-		contentPane.add(btnNewButton, "cell 1 15");
+		contentPane.add(botaoPesquisar, "cell 1 15");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "cell 0 17 4 1,grow");

@@ -50,6 +50,9 @@ public class TelaCadastroProjeto extends JFrame {
 	JButton botaoExcluir = new JButton("Excluir");
 	JButton botaoEditar = new JButton("Editar");
 	JButton botaoSalvar = new JButton("Salvar");
+	private JTextField textoFiltroCodigo;
+	private JTextField textoFiltroTipo;
+	private JTextField textoFiltroAmbiente;
 	
 	
 
@@ -79,7 +82,7 @@ public class TelaCadastroProjeto extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n][][grow]", "[][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][][][][][grow]"));
 		
 		
 		
@@ -293,10 +296,55 @@ public class TelaCadastroProjeto extends JFrame {
 				popularTabela();
 			}
 		});
+		
+		JLabel lblNewLabel_2 = new JLabel("Pesquisar por filtro");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		contentPane.add(lblNewLabel_2, "cell 0 10");
 		contentPane.add(botaoAtualizar, "cell 2 10,growx");
 		
+		JLabel lblNewLabel_3 = new JLabel("C\u00F3digo");
+		contentPane.add(lblNewLabel_3, "cell 0 11,alignx trailing");
+		
+		textoFiltroCodigo = new JTextField();
+		contentPane.add(textoFiltroCodigo, "cell 1 11,growx");
+		textoFiltroCodigo.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Tipo de projeto");
+		contentPane.add(lblNewLabel_4, "cell 0 12,alignx trailing");
+		
+		textoFiltroTipo = new JTextField();
+		contentPane.add(textoFiltroTipo, "cell 1 12,growx");
+		textoFiltroTipo.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Ambiente");
+		contentPane.add(lblNewLabel_5, "cell 0 13,alignx trailing");
+		
+		textoFiltroAmbiente = new JTextField();
+		contentPane.add(textoFiltroAmbiente, "cell 1 13,growx");
+		textoFiltroAmbiente.setColumns(10);
+		
+		JButton botaoPesquisar = new JButton("Pesquisar");
+		botaoPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProjetoEntity projetoFiltro = new ProjetoEntity();
+				projetoFiltro.setTipoProjeto(textoFiltroTipo.getText());
+				projetoFiltro.setAmbiente(textoFiltroAmbiente.getText());
+				
+				try {
+					if(!textoFiltroCodigo.getText().equals("")) {
+						projetoFiltro.setCodigo(Long.parseLong(textoFiltroCodigo.getText()));
+					}
+				}catch(Exception e1){
+					JOptionPane.showMessageDialog(null, "Valor no código precisa ser numérico.");
+				}
+				
+				popularTabelaFiltrada(projetoFiltro);
+			}
+		});
+		contentPane.add(botaoPesquisar, "cell 1 14");
+		
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 12 4 1,grow");
+		contentPane.add(scrollPane, "cell 0 16 4 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -354,6 +402,29 @@ public class TelaCadastroProjeto extends JFrame {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Erro ao buscar projetos no banco de dados: " + e.getMensagemDeErro());
 			}
+		}
+		
+		private void popularTabelaFiltrada(ProjetoEntity projetoFiltrado) {
+			try {
+				projetos = new ProjetoService().buscarProjetoFiltrado(projetoFiltrado);
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.getDataVector().removeAllElements(); //para não repetir a tabela em algum momento
+				
+				for (ProjetoEntity projetoEntity : projetos) {
+					model.addRow(new Object[] {
+							projetoEntity.getCodigo(),
+							projetoEntity.getTipoProjeto(),
+							projetoEntity.getAmbiente(),
+							projetoEntity.getArea(),
+							projetoEntity.getValor()
+					});
+				}
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Erro ao buscar projetos no banco de dados: " + e.getMensagemDeErro());
+			}
+			
+			
 		}
 		
 		public void carregarProjetoPorId(long codigoProjeto) {

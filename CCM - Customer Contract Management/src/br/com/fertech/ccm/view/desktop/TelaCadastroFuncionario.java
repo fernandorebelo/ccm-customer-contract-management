@@ -49,6 +49,8 @@ public class TelaCadastroFuncionario extends JFrame {
 	JButton botaoEditar = new JButton("Editar");
 	JButton botaoSalvar = new JButton("Salvar");
 	JButton botaoNovo = new JButton("Novo");
+	private JTextField textoFiltroNome;
+	private JTextField textoFiltroCodigo;
 
 	/**
 	 * Launch the application.
@@ -76,7 +78,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][200px:n,grow][][grow]", "[][][][][][][][][][][][][][][][]"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(220, 220, 220));
@@ -278,11 +280,49 @@ public class TelaCadastroFuncionario extends JFrame {
 				popularTabela();
 			}
 		});
+		
+		JLabel lblNewLabel_2 = new JLabel("Pesquisar por filtro");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		contentPane.add(lblNewLabel_2, "cell 0 10");
 		contentPane.add(botaoAtualizar, "cell 2 10,growx");
+		
+		JLabel lblNewLabel_4 = new JLabel("C\u00F3digo");
+		contentPane.add(lblNewLabel_4, "cell 0 11,alignx trailing");
+		
+		textoFiltroCodigo = new JTextField();
+		contentPane.add(textoFiltroCodigo, "cell 1 11,growx");
+		textoFiltroCodigo.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Nome");
+		contentPane.add(lblNewLabel_3, "cell 0 12,alignx trailing");
+		
+		textoFiltroNome = new JTextField();
+		contentPane.add(textoFiltroNome, "cell 1 12,growx");
+		textoFiltroNome.setColumns(10);
+		
+		JButton botaoPesquisar = new JButton("Pesquisar");
+		botaoPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FuncionarioEntity funcionarioFiltro = new FuncionarioEntity();
+				funcionarioFiltro.setNome(textoFiltroNome.getText());
+				
+				try {
+					if(!textoFiltroCodigo.getText().equals("")) {
+						funcionarioFiltro.setCodigoFuncionario(Long.parseLong(textoFiltroCodigo.getText()));
+					}
+				}catch(Exception e1){
+					JOptionPane.showMessageDialog(null, "Valor no código precisa ser numérico.");
+				}
+				
+				popularTabelaFiltrada(funcionarioFiltro);
+				
+			}
+		});
+		contentPane.add(botaoPesquisar, "cell 1 13");
 		
 		//tabela
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, "cell 0 12 4 1,grow");
+		contentPane.add(scrollPane, "cell 0 15 4 1,grow");
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -334,6 +374,26 @@ public class TelaCadastroFuncionario extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro ao buscar funcionários no banco de dados: " + e.getMensagemDeErro());
 		}
 		
+	}
+	
+	private void popularTabelaFiltrada(FuncionarioEntity funcionarioFiltrado) {
+		try {
+			funcionarios = new FuncionarioService().buscarFuncionarioFiltrado(funcionarioFiltrado);
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.getDataVector().removeAllElements(); //para não repetir a tabela em algum momento
+			
+			for (FuncionarioEntity funcionarioEntity : funcionarios) {
+				model.addRow(new Object[] {
+						funcionarioEntity.getCodigoFuncionario(),
+						funcionarioEntity.getNome(),
+						funcionarioEntity.getCargo(),
+						funcionarioEntity.getRegistroProfissional()
+						});
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro ao buscar funcionários no banco de dados: " + e.getMensagemDeErro());
+		}
 	}
 	
 	public void carregarFuncionarioPorId(long codigoCliente) {

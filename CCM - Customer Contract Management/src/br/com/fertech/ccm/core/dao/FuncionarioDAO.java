@@ -56,6 +56,9 @@ public class FuncionarioDAO {
 				sql += " REGISTRO_FUNCIONARIO LIKE ?";
 			}
 			
+			System.out.println(sql);
+
+			
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			
